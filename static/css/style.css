@@ -1,23 +1,37 @@
-#div_connection{
-    height: 300px;
-    width: 300px;
-    border-style: solid;
-    border-radius: 20px;
-	margin:0 auto;
-	border-color: firebrick;
+html{
+    height: 100%;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
-#top_row{
-
+.logo{
+    width: 200px;
+    height: 100px
 }
 
-.input_login{
-	text-align: center;
-    margin: 15px;
 
-}
-
-input.password{
+input[type="text"],input[type="password"] {
     padding: 10px;
     border: solid 5px #c9c9c9;
+}
+
+input[type="text"]:focus,input[type="password"]:focus{
+    border: solid 5px #969696;
+    outline:none;
+}
+
+
+.submit{
+    cursor:pointer;
+padding:5px 25px; 
+background: firebrick;
+border:1px solid #888686;
+border-radius: 10px;
+
+color:#f3f3f3;
+font-size:1.1em;
+}
+
+.submit:hover{
+background-color :indianred;
+box-shadow: 0 0 1px rgba(0,0,0, .75);
 }
