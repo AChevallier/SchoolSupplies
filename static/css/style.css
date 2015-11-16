@@ -1,3 +1,12 @@
 #div_connection{
-	align-text:center;
+    height: 300px;
+    width: 300px;
+    border-style: solid;
+    border-radius: 20px;
+	margin:0 auto;
+	border-color: firebrick;
+}
+
+#top_row{
+
 }
