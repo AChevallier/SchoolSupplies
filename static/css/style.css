@@ -14,4 +14,10 @@
 .input_login{
 	text-align: center;
     margin: 15px;
+
+}
+
+input.password{
+    padding: 10px;
+    border: solid 5px #c9c9c9;
 }
