@@ -4,7 +4,7 @@ html{
 }
 
 .logo{
-    width: 200px;
+    width: 300px;
     height: 100px
 }
 
@@ -34,4 +34,53 @@ font-size:1.1em;
 .submit:hover{
 background-color :indianred;
 box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+
+#top_bar{
+    background-color: #B22222;
+}
+
+#nav_bar{
+	width: 180px;
+	background-color: #404040;
+	float: left;
+	position: fixed;
+	height: 100%;
+        overflow: hidden;
+        outline: none;
+}
+
+.item_navbar{
+	background-color:#505050;
+        height: 30px; 
+        color: #FFFFFF;
+        text-align: center;
+        margin-bottom: 2px;
+}
+.item_navbar:hover{
+	background-color:#BF5454;
+}
+.inside_item_navbar{
+    vertical-align: sub;
+}
+
+.triangle_item_navbar{
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 10px;
+    border-color: transparent transparent transparent #a0a0a0;
+    float:right;
+    margin-top: 11px;
+    margin-right: 8px;
+}
+
+.selected_navbar{
+    background-color: #BF5454;
+}
+
+.body_write{
+    margin-left: 180px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
