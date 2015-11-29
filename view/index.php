@@ -45,19 +45,13 @@
                 </div>
             <script type="text/javascript">
                 window.onload = function(){
-                    var dict = variableGET();
-                    console.log(dict)
+                    var dict = core.variableGET();
                     var selected_page = document.getElementById(dict.tab);
                     selected_page.classList.add('selected_navbar')
                     var includeHtml = document.getElementById('include_html_here');
                 }
                 var navBarSelector = function(page){
-                    var navbar_item = document.getElementById(page);
-                    var includeHtml = document.getElementById('include_html_here');
-                    var selected_page = document.getElementsByClassName('selected_navbar')[0];
                     window.location.href = 'index.php?tab='+page;
-                    selected_page.classList.remove('selected_navbar');
-                    navbar_item.classList.add('selected_navbar')
                 }
             </script>
 	</body>

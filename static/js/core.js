@@ -1,6 +1,6 @@
 "use strict";
-
-function ajaxRequest(url, callback, method, requestData)
+var core = {};
+core.ajaxRequest = function(url, callback, method, requestData)
 {
     if (!method)
     {
@@ -45,7 +45,7 @@ function ajaxRequest(url, callback, method, requestData)
     }
 };
 
-function variableGET(){
+core.variableGET = function(){
     var getDict = {};
     if(document.location.toString().indexOf('?') !== -1) {
     var query = document.location
