@@ -1,10 +1,10 @@
 <html>
 	<head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>School Supplies</title>
-                <script src="../static/js/core.js"></script>
-		<link rel="stylesheet" href="../static/css/style.css">
-		<link rel="stylesheet" href="../static/css/index.css">
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <title>School Supplies</title>
+            <script src="../static/js/core.js"></script>
+            <link rel="stylesheet" href="../static/css/style.css">
+            <link rel="stylesheet" href="../static/css/index.css">
 	</head>
 	<body>
 		<div id="top_bar">
@@ -16,7 +16,10 @@
                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Accueil</span>
                         </div>
                         <div class="item_navbar" id="eleve" onclick="navBarSelector(this.id)">
-                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des élèves</span>
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des Ã©lÃ¨ves</span>
+                        </div>
+                        <div class="item_navbar" id="graphique" onclick="navBarSelector(this.id)">
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Graphique</span>
                         </div>
                         <div class="item_navbar" id="toto" onclick="navBarSelector(this.id)">
                             <span class="triangle_item_navbar"></span><span class="inside_item_navbar">blabla</span>
@@ -25,14 +28,17 @@
                     <div class="body_write">
                         <!-- include your text here -->
                         <div id="include_html_here">
-                           <?php 
-                                $tab = $_GET["tab"];
+                           <?php
+                               $tab = filter_input(INPUT_GET, 'tab');;
                                 switch ($tab) {
                                     case 'accueil':
                                         include 'accueil.php';
                                         break;
                                     case 'eleve':
                                         include 'eleve.php';
+                                        break;
+                                    case 'graphique':
+                                        include 'graphique.php';
                                         break;
                                     default:
                                         include 'accueil.php';
