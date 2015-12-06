@@ -62,3 +62,16 @@ core.variableGET = function(){
     }
     return getDict;
 }
+
+core.collapsble = function(div_col, id_icon_add){
+    var divCol = document.getElementById(div_col);
+    var imgSrc = document.getElementById(id_icon_add);
+    if(divCol.style.display === 'none'){
+        divCol.style.display = "block";
+        imgSrc.src = "../static/img/minus.png"
+    }
+    else{
+        divCol.style.display = "none";
+        imgSrc.src = "../static/img/plus.png"
+    }
+}

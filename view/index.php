@@ -8,21 +8,33 @@
 	</head>
 	<body>
 		<div id="top_bar">
-			<img src="../static/img/logo_moche.png" class="logo"/>
+			<div id="deconnexion">
+                <a href="">Se déconnecter <img src="../static/img/logout.png"/></a>
+            </div>
+            <img src="../static/img/logo_moche.png" class="logo"/>
 		</div>
 		<div>
                     <div id="nav_bar">
-                        <div class="item_navbar" id="accueil" onclick="navBarSelector(this.id)">
-                           <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Accueil</span>
+                        <div class="item_navbar" id="list" onclick="navBarSelector(this.id)">
+                           <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Liste de fournitures</span>
                         </div>
-                        <div class="item_navbar" id="eleve" onclick="navBarSelector(this.id)">
-                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des élèves</span>
+                        <div class="item_navbar" id="personne" onclick="navBarSelector(this.id)">
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des personnes</span>
+                        </div>
+                        <div class="item_navbar" id="classe" onclick="navBarSelector(this.id)">
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des classes</span>
+                        </div>
+                        <div class="item_navbar" id="matiere" onclick="navBarSelector(this.id)">
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des matières</span>
+                        </div>
+                        <div class="item_navbar" id="fourniture" onclick="navBarSelector(this.id)">
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des fournitures</span>
                         </div>
                         <div class="item_navbar" id="graphique" onclick="navBarSelector(this.id)">
                             <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Graphique</span>
                         </div>
-                        <div class="item_navbar" id="toto" onclick="navBarSelector(this.id)">
-                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">blabla</span>
+                        <div class="item_navbar profile" id="profile" onclick="navBarSelector(this.id)">
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Mon Profile</span>
                         </div>
                     </div>
                     <div class="body_write">
@@ -31,14 +43,26 @@
                            <?php
                                $tab = filter_input(INPUT_GET, 'tab');;
                                 switch ($tab) {
-                                    case 'accueil':
-                                        include 'accueil.php';
+                                    case 'list':
+                                        include 'list.php';
                                         break;
-                                    case 'eleve':
-                                        include 'eleve.php';
+                                    case 'personne':
+                                        include 'personne.php';
+                                        break;
+                                    case 'classe':
+                                        include 'classe.php';
+                                        break;
+                                    case 'matiere':
+                                        include 'matiere.php';
+                                        break;
+                                    case 'fourniture':
+                                        include 'fourniture.php';
                                         break;
                                     case 'graphique':
                                         include 'graphique.php';
+                                        break;
+                                    case 'profile':
+                                        include 'profile.php';
                                         break;
                                     default:
                                         include 'accueil.php';

@@ -13,16 +13,21 @@ body{
 }
 
 
-input[type="text"],input[type="password"] {
+input[type="text"],input[type="password"], input[type="checkbox"], input[type="date"] {
     padding: 10px;
     border: solid 5px #c9c9c9;
 }
 
-input[type="text"]:focus,input[type="password"]:focus{
+input[type="text"]:focus,input[type="password"], input[type="checkbox"], input[type="date"]:focus{
     border: solid 5px #969696;
     outline:none;
 }
 
+select{
+    border: solid 5px #969696;
+    outline:none;
+    height: 34px;
+}
 
 .submit{
     cursor:pointer;
@@ -91,4 +96,86 @@ box-shadow: 0 0 1px rgba(0,0,0, .75);
 
 #include_html_here{
     padding: 25px;
+}
+
+.input{
+    margin: 20px;
+
+}
+
+.label{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+.Row
+{
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+}
+
+.Column
+{
+    display: table-cell;
+}
+
+table{
+    width:100%;
+}
+
+th {
+    background-color: #BF5454;
+    color: white;
+    height: 50px;
+}
+tr:nth-child(even) {
+    background-color: #FFD6D6;
+}
+#add{
+    background-color: #F7E9E9;
+    border-radius: 5px;
+    padding: 10;
+}
+#csv{
+    margin-top: 10px;
+    background-color: #F7E9E9;
+    border-radius: 5px;
+    padding: 10;
+}
+#icon_add{
+    float:right;
+    margin-right: 5px;
+    margin-top: 2px;
+}
+#icon_add_csv
+{
+    float:right;
+    margin-right: 5px;
+    margin-top: 2px;
+}
+.div_{
+    background-color: #F7E9E9;
+    border-radius: 5px;
+    margin:10;
+    padding: 10;
+}
+
+#filter{
+    background-color: firebrick;
+    width: 100px;
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#deconnexion{
+    float: right;
+    line-height: 100px;
+}
+.profile{
+    background-color:rgba(247, 111, 101, 0.16);
 }
