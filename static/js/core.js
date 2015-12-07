@@ -46,9 +46,10 @@ core.ajaxRequest = function(url, callback, method, requestData)
 };
 
 core.variableGET = function(){
-    var getDict = {};
+    var getDict = null;
     if(document.location.toString().indexOf('?') !== -1) {
-    var query = document.location
+        getDict = {};
+        var query = document.location
                    .toString()
                    // get the query string
                    .replace(/^.*?\?/, '')

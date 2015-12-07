@@ -18,6 +18,9 @@
                         <div class="item_navbar" id="list" onclick="navBarSelector(this.id)">
                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Liste de fournitures</span>
                         </div>
+                        <div class="item_navbar" id="listCreation" onclick="navBarSelector(this.id)">
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Création de votre liste</span>
+                        </div>
                         <div class="item_navbar" id="personne" onclick="navBarSelector(this.id)">
                             <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des personnes</span>
                         </div>
@@ -34,7 +37,7 @@
                             <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Graphique</span>
                         </div>
                         <div class="item_navbar profile" id="profile" onclick="navBarSelector(this.id)">
-                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Mon Profile</span>
+                            <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Mon Profil</span>
                         </div>
                     </div>
                     <div class="body_write">
@@ -64,8 +67,11 @@
                                     case 'profile':
                                         include 'profile.php';
                                         break;
+                                    case 'listCreation':
+                                        include 'listCreation.php';
+                                        break;
                                     default:
-                                        include 'accueil.php';
+                                        include 'list.php';
                                         break;
                                 }
                                 
@@ -76,7 +82,10 @@
             <script type="text/javascript">
                 window.onload = function(){
                     var dict = core.variableGET();
-                    var selected_page = document.getElementById(dict.tab);
+                    if(dict === null)
+                        var selected_page = document.getElementById('list');
+                    else
+                        var selected_page = document.getElementById(dict.tab);
                     selected_page.classList.add('selected_navbar')
                     var includeHtml = document.getElementById('include_html_here');
                 }

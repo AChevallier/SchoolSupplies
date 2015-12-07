@@ -1,7 +1,7 @@
 
 <div>
     <div id="add" onclick="core.collapsble('div_classe_col', 'icon_add')"><img src="../static/img/plus.png" id="icon_add"/>
-        Ajouter une fourniture
+        Ajouter une fourniture à la liste
     </div>
 
     <div id="div_classe_col" class="div_" style="display:none;">
@@ -9,25 +9,22 @@
             <div class="Row">
                 <div class="Column">
                     <div class="input">
-                        <label class="label">Nom de la fourniture:</label>
-                        <input type="text" id="nom_classe"></input>
+                        <label class="label">Quantité</label>
+                        <input type="text" id="quantite"></input>
                     </div>
                     <div class="input">
-                        <label class="label">Groupe de la fourniture:</label>
-                        <select>
-                          <option value="all">Commun</option>
+                        <label class="label">Fournitures:</label>
+                        <select id="famille_four">
+                          <option value="all">Tous</option>
+                          <option value="commun">Commun</option>
                           <option value="maths">Mathématique</option>
                           <option value="fr">Français</option>
                           <option value="hist">Histoire/Géographie</option>
                         </select>
-                    </div>
-                      <div class="input">
-                        <label class="label">Niveau de la fourniture:</label>
-                        <select>
-                          <option value="all">2nd</option>
-                          <option value="maths">1ère</option>
-                          <option value="fr">Terminal</option>
-                          <option value="hist">Tous</option>
+                        <select id="fourn">
+                          <option value="crayonHB">Crayon HB</option>
+                          <option value="ti83">Calculette Texas TI 83+</option>
+                          <option value="couleur">Crayon couleur</option>
                         </select>
                     </div>
                 </div>
@@ -45,31 +42,27 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Nom</th>
-              <th scope="col">Matière</th>
-              <th scope="col">Niveau</th>
+              <th scope="col">Quantité</th>
+              <th scope="col">Fournitures</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>1</td>
+              <td>1</td>
               <td>Crayon HB</td>
-              <td>Commun</td>
-              <td>Tous</td>
               <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
             </tr>
             <tr>
               <td>2</td>
+              <td>1</td>
               <td>Calculette Texas TI 83+</td>
-              <td>Mathématique</td>
-              <td>1ère</td>
               <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
             </tr>
             <tr>
               <td>3</td>
+              <td>2</td>
               <td>Crayon couleur</td>
-              <td>Commun</td>
-              <td>Terminal</td>
               <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
             </tr>
           </tbody>
