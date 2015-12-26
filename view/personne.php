@@ -1,11 +1,10 @@
 
 <div>
-    <div id="add" onclick="core.collapsble('add_pupils_col', 'icon_add')"><img src="../static/img/plus.png" id="icon_add"/>
+    <div id="add" onclick="core.collapsble('div_classe_col', 'icon_add')"><img src="../static/img/plus.png" id="icon_add"/>
         Ajouter une personne
     </div>
 
-    <div id="add_pupils_col" class="div_" style="display:none;">
-        <form>
+    <div id="div_classe_col" class="div_" style="display:none;">
             <div class="Row">
                 <div class="Column">
                     <div class="input">
@@ -30,7 +29,7 @@
                 <div class="Column">
                     <div class="input">
                         <label class="label">Login:</label>
-                        <input type="text" id="login" disabled="disabled"></input>
+                        <input type="text" id="login" value='.' disabled="disabled"></input>
                     </div>
                     <div class="input">
                         <label class="label">Mot de passe:</label>
@@ -40,10 +39,9 @@
             </div>
             <div>
                 <div class="input_login">
-                    <input class="submit" type="submit" value="Ajouter"></input>
+                    <input class="submit" id='submit' onclick="functions.clickAdd(this.id)" type="submit" value="Ajouter"></input>
                 </div>
             </div>
-        </form>
     </div>
         
     <div id="csv" onclick="core.collapsble('add_csv', 'icon_add_csv')"><img src="../static/img/plus.png" id="icon_add_csv"/>
@@ -81,6 +79,7 @@
         <table id="pupils_tablet" summary="tableau des personne">
           <thead>
             <tr>
+              <td></td>
               <th scope="col">ID</th>
               <th scope="col">Nom</th>
               <th scope="col">Prénom</th>
@@ -89,44 +88,50 @@
               <th scope="col">Login</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Chevallier</td>
-              <td>Alexandre</td>
-              <td>28/12/1993</td>
-              <td>Non</td>
-              <td>alexandre.chevallier</td>
-              <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Borrédon</td>
-              <td>Hervé</td>
-              <td>25/09/1984</td>
-              <td>Oui</td>
-              <td>herve.borredon</td>
-              <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Chopin</td>
-              <td>Frédéric</td>
-              <td>1/03/1810</td>
-              <td>Oui</td>
-              <td>chopin.frederic</td>
-              <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Beck</td>
-              <td>Jason Charles</td>
-              <td>20/03/1972</td>
-              <td>Non</td>
-              <td>beck.jasonch</td>
-              <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
-            </tr>
+          <tbody id="body_table">
+            <?php
+            try
+            {
+              $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
+            }
+            catch(Exception $e)
+            {
+                    die('Erreur : '.$e->getMessage());
+            }
+            $result = $bdd->query("SELECT id,nom, prenom, dateNaissance, estProfesseur, login FROM personne;");
+            foreach ($result as $row) {
+              echo $row['estProfesseur'];
+              if($row['estProfesseur'] == 1){
+                $prof = 'checked="checked"';
+              }
+              else{
+                $prof = '';
+              }
+              echo'<tr id="matiere_'.$row['id'].'">';
+              echo "<td style='width:10px;'><input type='checkbox'></input></td>";
+              echo'<td>'.$row['id'].'</td>';
+              echo'<td>'.$row['nom'].'</td>';
+              echo'<td>'.$row['prenom'].'</td>';
+              echo'<td>'.$row['dateNaissance'].'</td>';
+              echo'<td><input disabled type="checkbox" '.$prof.'></input></td>';
+              echo'<td>'.$row['login'].'</td>';
+              echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
+              echo'</tr>';
+            }
+            
+          ?>
           </tbody>
         </table>
     </div>
 </div>
+<script type="text/javascript">
+  var nom = document.getElementById('nom');
+  var prenom = document.getElementById('prenom');
+  var login = document.getElementById('login');
+  nom.onkeyup = function(){
+    login.value = prenom.value.toLowerCase() + '.' + this.value.toLowerCase()
+  } 
+  prenom.onkeyup = function(){
+    login.value = this.value.toLowerCase() + '.' + nom.value.toLowerCase()
+  }   
+</script>

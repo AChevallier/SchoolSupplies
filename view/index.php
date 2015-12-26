@@ -3,6 +3,7 @@
             <meta http-equiv="content-type" content="text/html; charset=utf-8" />
             <title>School Supplies</title>
             <script src="../static/js/core.js"></script>
+            <script src="../static/js/function.js"></script>
             <link rel="stylesheet" href="../static/css/style.css">
             <link rel="stylesheet" href="../static/css/index.css">
 	</head>
