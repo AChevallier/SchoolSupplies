@@ -5,56 +5,125 @@
     </div>
 
     <div id="div_classe_col" class="div_" style="display:none;">
-        <form>
-            <div class="Row">
-                <div class="Column">
-                    <div class="input">
-                        <label class="label">Nom de la classe:</label>
-                        <input type="text" id="nom_classe"></input>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="input_login">
-                    <input class="submit" type="submit" value="Ajouter"></input>
-                </div>
-            </div>
-        </form>
+      <div class="Row">
+          <div class="Column">
+              <div class="input">
+                  <label class="label">Nom de la classe:</label>
+                  <input type="text" id="nom_classe"></input>
+              </div>
+          </div>
+      </div>
+      <div class="Row">
+          <div class="Column">
+              <div class="input">
+                  <label class="label">Élèves:</label>
+                  <select id='select_eleve'>
+                    <option id="-1">----</option>
+                    <?php
+                      try
+                        {
+                          $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
+                        }
+                        catch(Exception $e)
+                        {
+                                die('Erreur : '.$e->getMessage());
+                        }
+                        $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 0 AND p.id NOT IN (SELECT eleve_id FROM link_eleve)");
+                        foreach ($result as $row) {
+                          echo '<option value="'.$row['id'].'">'.$row['prenom'].'-'.$row['nom'].'</option>';
+                        }
+                    ?>
+                  </select>
+              </div>
+              <table id='table_eleve'>
+              
+              </table>
+          </div>
+          <div class="Column">
+              <div class="input">
+                  <label class="label">Professeurs:</label>
+                  <select id='select_prof'>
+                   <option id='-2'>----</option>
+                    <?php
+                      try
+                        {
+                          $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
+                        }
+                        catch(Exception $e)
+                        {
+                                die('Erreur : '.$e->getMessage());
+                        }
+                        $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 1;");
+                        foreach ($result as $row) {
+                          echo '<option value="'.$row['id'].'">'.$row['prenom'].'-'.$row['nom'].'</option>';
+                        }
+                    ?>
+                  </select>
+              </div>
+          </div>
+      </div>
+      <div>
+          <div class="input_login">
+              <input class="submit" onclick="functions.clickAdd(this.id)" id="submit" type="submit" value="Ajouter"></input>
+          </div>
+      </div>
     </div>
 
     <div class="div_">
         <table id="pupils_tablet" summary="tableau des classes">
           <thead>
             <tr>
+            <td></td>
               <th scope="col">ID</th>
               <th scope="col">Nom</th>
+              <th scope="col">Niveau</th>
               <th scope="col">Élèves</th>
               <th scope="col">Professeurs</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>2A</td>
-              <td><a href="">Élèves</a></td>
-              <td><a href="">Professeurs</a></td>
-              <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>1B</td>
-              <td><a href="">Élèves</a></td>
-              <td><a href="">Professeurs</a></td>
-              <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>TA</td>
-              <td><a href="">Élèves</a></td>
-              <td><a href="">Professeurs</a></td>
-              <td><img onclick="" src="../static/img/parameter.png"/> <img onclick="" src="../static/img/remove.png"/></td>
-            </tr>
+          <tbody id='body_table'>
+            <?php
+            try
+            {
+              $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
+            }
+            catch(Exception $e)
+            {
+                    die('Erreur : '.$e->getMessage());
+            }
+            $result = $bdd->query("SELECT c.id as id, c.nom as nom, n.nom as niveau  FROM classe c, niveau n WHERE c.niveau_id = n.id;");
+            foreach ($result as $row) {
+              $title_eleve = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_eleve le, personne p WHERE c.link_eleve_id = le.classe_id AND le.eleve_id = p.id AND c.id = ".$row['id'].";");
+              $eleves = '';
+              foreach ($title_eleve as $eleve) {
+                $eleves .= $eleve['nom'].' '.$eleve['prenom'].'|';
+              }
+              $title_prof = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_prof le, personne p WHERE c.link_prof_id = le.classe_id AND le.prof_id = p.id AND c.id = ".$row['id'].";");
+              $profs = '';
+              foreach ($title_prof as $prof) {
+                $profs .= $prof['nom'].' '.$prof['prenom'].'|';
+              }
+              echo'<tr id="matiere_'.$row['id'].'">';
+              echo "<td style='width:10px;'><input type='checkbox'></input></td>";
+              echo'<td>'.$row['id'].'</td>';
+              echo'<td>'.$row['nom'].'</td>';
+              echo'<td>'.$row['niveau'].'</td>';
+              echo'<td title="'.$eleves.'"><a href="">Élèves</a></td>';
+              echo'<td title="'.$profs.'"><a href="">Professeurs</a></td>';
+              echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
+              echo'</tr>';
+            }
+            
+          ?>
           </tbody>
         </table>
     </div>
 </div>
+<script type="text/javascript">
+ var select_eleve = document.getElementById('select_eleve');
+ var table_eleve = document.getElementById('table_eleve');
+ select_eleve.onchange = function(value){
+  table_eleve.innerHTML += '<tr><td></td></tr>'
+    console.log(this.value);
+ }
+</script>

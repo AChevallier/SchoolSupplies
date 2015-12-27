@@ -24,7 +24,7 @@ functions.clickAdd = function(id){
 		if(allInputs[i].type === 'checkbox')
 		{
 			var check = allInputs[i].checked;
-			string += allInputs[i].id+'='+ check ? true : false;
+			string += allInputs[i].id+'='+ (check ? 1 : 0);
 		}
 		else{
 			string += allInputs[i].id+'='+allInputs[i].value;

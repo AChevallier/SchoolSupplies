@@ -23,7 +23,7 @@ switch ($_POST['select']) {
 				));
 			break;
 		case 'personne':
-			$req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp)');
+			$req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp, NULL)');
 			$req->execute(array(
 				'nom' => $_POST["nom"],
 				'prenom' => $_POST['prenom'],

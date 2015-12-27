@@ -29,7 +29,7 @@
                 <div class="Column">
                     <div class="input">
                         <label class="label">Login:</label>
-                        <input type="text" id="login" value='.' disabled="disabled"></input>
+                        <input type="text" id="login" value='.'></input>
                     </div>
                     <div class="input">
                         <label class="label">Mot de passe:</label>
@@ -70,7 +70,7 @@
           Filter
         </div>
         <div id="filter_div" style="display:none;">
-        <select>
+        <select id="select_filter">
           <option value="all">Tous</option>
           <option value="eleve">Élèves</option>
           <option value="prof">Professeurs</option>
@@ -100,7 +100,6 @@
             }
             $result = $bdd->query("SELECT id,nom, prenom, dateNaissance, estProfesseur, login FROM personne;");
             foreach ($result as $row) {
-              echo $row['estProfesseur'];
               if($row['estProfesseur'] == 1){
                 $prof = 'checked="checked"';
               }
@@ -133,5 +132,24 @@
   } 
   prenom.onkeyup = function(){
     login.value = this.value.toLowerCase() + '.' + nom.value.toLowerCase()
-  }   
+  }  
+  var selectFilter = document.getElementById('select_filter');
+  selectFilter.onchange = function(){
+    var tbody = document.getElementById('body_table');
+    tbody.innerHTML = '';
+    var callback = function(data){
+      tbody.innerHTML = data;
+    }
+    var string;
+    if(this.value == 'prof'){
+      string = 'filter=prof';
+    }
+    else if(this.value == 'eleve'){
+      string = 'filter=eleve';
+    }
+  else{
+      string = 'filter=all';
+    }
+  core.ajaxRequest('../controller/api_filter_personne.php', callback, 'POST', string);
+  }
 </script>
