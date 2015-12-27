@@ -123,7 +123,7 @@
  var select_eleve = document.getElementById('select_eleve');
  var table_eleve = document.getElementById('table_eleve');
  select_eleve.onchange = function(value){
-  table_eleve.innerHTML += '<tr><td></td></tr>'
-    console.log(this.value);
+  table_eleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>'
+    console.log(this.selectedOptions[0].value);
  }
 </script>
