@@ -12,6 +12,27 @@
                   <input type="text" id="nom_classe"></input>
               </div>
           </div>
+         <div class="Column">
+            <div class="input">
+                <label class="label">Niveau:</label>
+                <select id='niveau'>
+                  <?php
+                      try
+                        {
+                          $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
+                        }
+                        catch(Exception $e)
+                        {
+                                die('Erreur : '.$e->getMessage());
+                        }
+                        $result = $bdd->query("SELECT id, nom FROM niveau");
+                        foreach ($result as $row) {
+                          echo '<option value="'.$row['id'].'">'.$row['nom'].'</option>';
+                        }
+                    ?>
+                </select>
+            </div>
+          </div>
       </div>
       <div class="Row">
           <div class="Column">
@@ -59,12 +80,15 @@
                         }
                     ?>
                   </select>
+                  <table id='table_prof'>
+              
+                   </table>
               </div>
           </div>
       </div>
       <div>
           <div class="input_login">
-              <input class="submit" onclick="functions.clickAdd(this.id)" id="submit" type="submit" value="Ajouter"></input>
+              <input class="submit" onclick="functions.clickAddClasses(this.id, listEleves, listProfs)" id="submit" type="submit" value="Ajouter"></input>
           </div>
       </div>
     </div>
@@ -93,12 +117,12 @@
             }
             $result = $bdd->query("SELECT c.id as id, c.nom as nom, n.nom as niveau  FROM classe c, niveau n WHERE c.niveau_id = n.id;");
             foreach ($result as $row) {
-              $title_eleve = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_eleve le, personne p WHERE c.link_eleve_id = le.classe_id AND le.eleve_id = p.id AND c.id = ".$row['id'].";");
+              $title_eleve = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_eleve le, personne p WHERE c.id = le.classe_id AND le.eleve_id = p.id AND c.id = ".$row['id'].";");
               $eleves = '';
               foreach ($title_eleve as $eleve) {
                 $eleves .= $eleve['nom'].' '.$eleve['prenom'].'|';
               }
-              $title_prof = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_prof le, personne p WHERE c.link_prof_id = le.classe_id AND le.prof_id = p.id AND c.id = ".$row['id'].";");
+              $title_prof = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_prof le, personne p WHERE c.id = le.classe_id AND le.prof_id = p.id AND c.id = ".$row['id'].";");
               $profs = '';
               foreach ($title_prof as $prof) {
                 $profs .= $prof['nom'].' '.$prof['prenom'].'|';
@@ -120,10 +144,26 @@
     </div>
 </div>
 <script type="text/javascript">
- var select_eleve = document.getElementById('select_eleve');
- var table_eleve = document.getElementById('table_eleve');
- select_eleve.onchange = function(value){
-  table_eleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>'
-    console.log(this.selectedOptions[0].value);
+ var selectEleve = document.getElementById('select_eleve');
+ var tableEleve = document.getElementById('table_eleve');
+ var selectProf = document.getElementById('select_prof');
+ var tableProf = document.getElementById('table_prof');
+ var listEleves = [];
+ var listProfs = [];
+ selectEleve.onchange = function(value){
+  if(this.selectedOptions[0].innerHTM != '---'){
+    table_eleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+    listEleves.push(this.selectedOptions[0].value);
+    this.remove(this.selectedIndex);
+  }
+  
+ }
+  selectProf.onchange = function(value){
+  if(this.selectedOptions[0].innerHTM != '---'){
+    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+    listProfs.push(this.selectedOptions[0].value);
+    //this.remove(this.selectedIndex)
+  }
+  
  }
 </script>

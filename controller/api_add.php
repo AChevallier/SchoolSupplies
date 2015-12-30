@@ -18,7 +18,7 @@ switch ($_POST['select']) {
 		case 'fourniture':
 			$req = $bdd->prepare('INSERT INTO fourniture VALUES(\'\',:nom, :matiere, NULL)');
 			$req->execute(array(
-				'nom' => $_POST["nom_classe"],
+				'nom' => $_POST["nom_fourniture"],
 				'matiere' => $_POST['select_matiere']
 				));
 			break;
@@ -32,6 +32,28 @@ switch ($_POST['select']) {
 				'login' => $_POST['login'],
 				'mdp' => $_POST['mdp'],
 				));
+			break;
+		case 'classe':
+			$eleves = explode(",", $_POST["listEleves"]);
+			$profs = explode(",", $_POST["listProfs"]);
+			$req = $bdd->prepare('INSERT INTO classe VALUES(\'\',:nom, (SELECT id FROM niveau WHERE id = :niveau))');
+			$req->execute(array(
+				'nom' => $_POST["nom_classe"],
+				'niveau' => $_POST['niveau']
+				));
+			foreach ($eleves as $value) {
+				echo $value;
+				$req = $bdd->prepare('INSERT INTO link_eleve VALUES(:eleve, (SELECT max(id) FROM classe))');
+				$req->execute(array(
+					'eleve' => $value
+					));
+			}
+			foreach ($profs as $value) {
+				$req = $bdd->prepare('INSERT INTO link_prof VALUES(:prof, (SELECT max(id) FROM classe))');
+				$req->execute(array(
+					'prof' => $value
+					));
+			}
 			break;
 		default:
 		print 'default';

@@ -9,7 +9,7 @@
           <div class="Column">
               <div class="input">
                   <label class="label">Nom de la fourniture:</label>
-                  <input type="text" id="nom_classe"></input>
+                  <input type="text" id="nom_fourniture"></input>
               </div>
               <div class="input">
                   <label class="label">Groupe de la fourniture:</label>

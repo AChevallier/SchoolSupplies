@@ -42,3 +42,20 @@ functions.clickAdd = function(id){
 	core.ajaxRequest('../controller/api_add.php',callback, 'POST', string);
 	location.reload();
 }
+
+functions.clickAddClasses = function(id, listEleves, listProfs){
+	var select = document.getElementsByClassName('selected_navbar')[0].id;
+	var nomInput =document.getElementById('nom_classe');
+	var niveau = document.getElementById('niveau');
+	var string = nomInput.id+'='+nomInput.value
+	var callback = function(data){
+		console.log(data);
+		//location.reload();
+	}
+	string += '&listEleves='+listEleves.toString();
+	string += '&listProfs='+listProfs.toString();
+	string += '&niveau='+niveau.value;
+	string += '&select='+select;
+	core.ajaxRequest('../controller/api_add.php',callback, 'POST', string);
+	//location.reload();
+}
