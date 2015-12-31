@@ -6,7 +6,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Connexion') {
 	$bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
 
 	// on teste si une entrée de la base contient ce couple login / pass
-	$sql = $bdd ->prepare('SELECT login, isAdmin, estProfesseur FROM personne WHERE login=:login AND password=:password');
+	$sql = $bdd ->prepare('SELECT id, login, isAdmin, estProfesseur FROM personne WHERE login=:login AND password=:password');
 	$sql->execute(array(
 				'login' => $_POST["login"],
 				'password' => $_POST['password']
@@ -15,6 +15,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Connexion') {
 	// si on obtient une réponse, alors l'utilisateur est un membre
 		if ($user['login'] == $_POST['login']) {
 			session_start();
+			$_SESSION['id'] = $user['id'];
 			$_SESSION['login'] = $_POST['login'];
 			$_SESSION['isAdmin'] = $user['isAdmin'];
 			$_SESSION['estProfesseur'] = $user['estProfesseur'];

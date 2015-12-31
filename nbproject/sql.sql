@@ -2,43 +2,42 @@
 -- version 4.2.10
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Dec 27, 2015 at 01:50 AM
--- Server version: 5.5.38
--- PHP Version: 5.6.2
+-- Client :  localhost
+-- Généré le :  Jeu 31 Décembre 2015 à 01:19
+-- Version du serveur :  5.5.38
+-- Version de PHP :  5.6.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Database: `schoolsu`
+-- Base de données :  `schoolsu`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `classe`
+-- Structure de la table `classe`
 --
 
 CREATE TABLE `classe` (
 `id` int(11) NOT NULL,
   `nom` varchar(50) NOT NULL,
-  `niveau_id` int(11) NOT NULL,
-  `link_eleve_id` int(11) DEFAULT NULL,
-  `link_prof_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `niveau_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `classe`
+-- Contenu de la table `classe`
 --
 
-INSERT INTO `classe` (`id`, `nom`, `niveau_id`, `link_eleve_id`, `link_prof_id`) VALUES
-(1, '2B', 3, 1, 1);
+INSERT INTO `classe` (`id`, `nom`, `niveau_id`) VALUES
+(1, '2B', 3),
+(15, '3T', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fourniture`
+-- Structure de la table `fourniture`
 --
 
 CREATE TABLE `fourniture` (
@@ -46,21 +45,22 @@ CREATE TABLE `fourniture` (
   `nom` varchar(255) NOT NULL,
   `matiere_id` int(11) NOT NULL,
   `group_niveau_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `fourniture`
+-- Contenu de la table `fourniture`
 --
 
 INSERT INTO `fourniture` (`id`, `nom`, `matiere_id`, `group_niveau_id`) VALUES
 (3, 'stylo plume', 7, NULL),
 (4, 'crayon de couleur', 9, NULL),
-(5, 'basket', 10, NULL);
+(5, 'basket', 10, NULL),
+(6, 'violon', 11, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group_niveau`
+-- Structure de la table `group_niveau`
 --
 
 CREATE TABLE `group_niveau` (
@@ -71,7 +71,7 @@ CREATE TABLE `group_niveau` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `link_eleve`
+-- Structure de la table `link_eleve`
 --
 
 CREATE TABLE `link_eleve` (
@@ -80,16 +80,17 @@ CREATE TABLE `link_eleve` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `link_eleve`
+-- Contenu de la table `link_eleve`
 --
 
 INSERT INTO `link_eleve` (`eleve_id`, `classe_id`) VALUES
-(1, 1);
+(1, 1),
+(7, 15);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `link_prof`
+-- Structure de la table `link_prof`
 --
 
 CREATE TABLE `link_prof` (
@@ -98,37 +99,62 @@ CREATE TABLE `link_prof` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `link_prof`
+-- Contenu de la table `link_prof`
 --
 
 INSERT INTO `link_prof` (`prof_id`, `classe_id`) VALUES
-(3, 1);
+(3, 1),
+(3, 15);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `matiere`
+-- Structure de la table `liste`
+--
+
+CREATE TABLE `liste` (
+`id` int(11) NOT NULL,
+  `prof_id` int(11) NOT NULL,
+  `fourniture_id` int(11) NOT NULL,
+  `quantite` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `liste`
+--
+
+INSERT INTO `liste` (`id`, `prof_id`, `fourniture_id`, `quantite`) VALUES
+(1, 1, 3, 2),
+(2, 5, 4, 5),
+(4, 1, 5, 6),
+(5, 6, 4, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `matiere`
 --
 
 CREATE TABLE `matiere` (
 `id` int(11) NOT NULL,
   `nom` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `matiere`
+-- Contenu de la table `matiere`
 --
 
 INSERT INTO `matiere` (`id`, `nom`) VALUES
 (7, 'Français'),
 (8, 'Maths'),
 (9, 'Géographie'),
-(10, 'Sport');
+(10, 'Sport'),
+(11, 'Musique');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `niveau`
+-- Structure de la table `niveau`
 --
 
 CREATE TABLE `niveau` (
@@ -138,7 +164,7 @@ CREATE TABLE `niveau` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `niveau`
+-- Contenu de la table `niveau`
 --
 
 INSERT INTO `niveau` (`id`, `nom`, `libelle`) VALUES
@@ -149,7 +175,7 @@ INSERT INTO `niveau` (`id`, `nom`, `libelle`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personne`
+-- Structure de la table `personne`
 --
 
 CREATE TABLE `personne` (
@@ -164,7 +190,7 @@ CREATE TABLE `personne` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `personne`
+-- Contenu de la table `personne`
 --
 
 INSERT INTO `personne` (`id`, `nom`, `prenom`, `dateNaissance`, `estProfesseur`, `login`, `password`, `isAdmin`) VALUES
@@ -176,112 +202,130 @@ INSERT INTO `personne` (`id`, `nom`, `prenom`, `dateNaissance`, `estProfesseur`,
 (7, 'DwarfNeedsTraining', 'Nicole', '1890-01-01', 0, 'nicole.dwarfneedstraining', 'a', NULL);
 
 --
--- Indexes for dumped tables
+-- Index pour les tables exportées
 --
 
 --
--- Indexes for table `classe`
+-- Index pour la table `classe`
 --
 ALTER TABLE `classe`
- ADD PRIMARY KEY (`id`), ADD KEY `niveau_id` (`niveau_id`,`link_eleve_id`,`link_prof_id`), ADD KEY `link_eleve_id` (`link_eleve_id`), ADD KEY `link_prof_id` (`link_prof_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `niveau_id` (`niveau_id`);
 
 --
--- Indexes for table `fourniture`
+-- Index pour la table `fourniture`
 --
 ALTER TABLE `fourniture`
  ADD PRIMARY KEY (`id`), ADD KEY `matiere_id` (`matiere_id`);
 
 --
--- Indexes for table `group_niveau`
+-- Index pour la table `group_niveau`
 --
 ALTER TABLE `group_niveau`
  ADD PRIMARY KEY (`id_fourniture`,`id_niveau`);
 
 --
--- Indexes for table `link_eleve`
+-- Index pour la table `link_eleve`
 --
 ALTER TABLE `link_eleve`
  ADD PRIMARY KEY (`eleve_id`,`classe_id`), ADD KEY `classe_id` (`classe_id`);
 
 --
--- Indexes for table `link_prof`
+-- Index pour la table `link_prof`
 --
 ALTER TABLE `link_prof`
  ADD PRIMARY KEY (`prof_id`,`classe_id`), ADD KEY `classe_id` (`classe_id`);
 
 --
--- Indexes for table `matiere`
+-- Index pour la table `liste`
+--
+ALTER TABLE `liste`
+ ADD PRIMARY KEY (`id`,`prof_id`,`fourniture_id`), ADD KEY `prof_id` (`prof_id`), ADD KEY `fourniture_id` (`fourniture_id`);
+
+--
+-- Index pour la table `matiere`
 --
 ALTER TABLE `matiere`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `niveau`
+-- Index pour la table `niveau`
 --
 ALTER TABLE `niveau`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `personne`
+-- Index pour la table `personne`
 --
 ALTER TABLE `personne`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `login` (`login`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables exportées
 --
 
 --
--- AUTO_INCREMENT for table `classe`
+-- AUTO_INCREMENT pour la table `classe`
 --
 ALTER TABLE `classe`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
--- AUTO_INCREMENT for table `fourniture`
+-- AUTO_INCREMENT pour la table `fourniture`
 --
 ALTER TABLE `fourniture`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT for table `matiere`
+-- AUTO_INCREMENT pour la table `liste`
+--
+ALTER TABLE `liste`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT pour la table `matiere`
 --
 ALTER TABLE `matiere`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
--- AUTO_INCREMENT for table `niveau`
+-- AUTO_INCREMENT pour la table `niveau`
 --
 ALTER TABLE `niveau`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `personne`
+-- AUTO_INCREMENT pour la table `personne`
 --
 ALTER TABLE `personne`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `classe`
+-- Contraintes pour la table `classe`
 --
 ALTER TABLE `classe`
 ADD CONSTRAINT `classe_ibfk_1` FOREIGN KEY (`niveau_id`) REFERENCES `niveau` (`id`);
 
 --
--- Constraints for table `fourniture`
+-- Contraintes pour la table `fourniture`
 --
 ALTER TABLE `fourniture`
 ADD CONSTRAINT `fourniture_ibfk_1` FOREIGN KEY (`matiere_id`) REFERENCES `matiere` (`id`);
 
 --
--- Constraints for table `link_eleve`
+-- Contraintes pour la table `link_eleve`
 --
 ALTER TABLE `link_eleve`
-ADD CONSTRAINT `link_eleve_ibfk_2` FOREIGN KEY (`classe_id`) REFERENCES `classe` (`id`),
-ADD CONSTRAINT `link_eleve_ibfk_1` FOREIGN KEY (`eleve_id`) REFERENCES `personne` (`id`);
+ADD CONSTRAINT `link_eleve_ibfk_1` FOREIGN KEY (`eleve_id`) REFERENCES `personne` (`id`),
+ADD CONSTRAINT `link_eleve_ibfk_2` FOREIGN KEY (`classe_id`) REFERENCES `classe` (`id`);
 
 --
--- Constraints for table `link_prof`
+-- Contraintes pour la table `link_prof`
 --
 ALTER TABLE `link_prof`
-ADD CONSTRAINT `link_prof_ibfk_2` FOREIGN KEY (`classe_id`) REFERENCES `classe` (`id`),
-ADD CONSTRAINT `link_prof_ibfk_1` FOREIGN KEY (`prof_id`) REFERENCES `personne` (`id`);
+ADD CONSTRAINT `link_prof_ibfk_1` FOREIGN KEY (`prof_id`) REFERENCES `personne` (`id`),
+ADD CONSTRAINT `link_prof_ibfk_2` FOREIGN KEY (`classe_id`) REFERENCES `classe` (`id`);
+
+--
+-- Contraintes pour la table `liste`
+--
+ALTER TABLE `liste`
+ADD CONSTRAINT `liste_ibfk_2` FOREIGN KEY (`fourniture_id`) REFERENCES `fourniture` (`id`),
+ADD CONSTRAINT `liste_ibfk_1` FOREIGN KEY (`prof_id`) REFERENCES `personne` (`id`);

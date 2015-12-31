@@ -1,4 +1,5 @@
 <?php
+session_start();
 try
 {
 	$bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
@@ -42,7 +43,6 @@ switch ($_POST['select']) {
 				'niveau' => $_POST['niveau']
 				));
 			foreach ($eleves as $value) {
-				echo $value;
 				$req = $bdd->prepare('INSERT INTO link_eleve VALUES(:eleve, (SELECT max(id) FROM classe))');
 				$req->execute(array(
 					'eleve' => $value
@@ -54,6 +54,14 @@ switch ($_POST['select']) {
 					'prof' => $value
 					));
 			}
+			break;
+		case 'liste':
+			$req = $bdd->prepare('INSERT INTO liste VALUES(\'\',:prof, :fourniture, :quantite)');
+			$req->execute(array(
+				'prof' => $_SESSION["id"],
+				'fourniture' => $_POST['fourn'],
+				'quantite' => $_POST['quantite']
+				));
 			break;
 		default:
 		print 'default';

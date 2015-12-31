@@ -23,13 +23,13 @@ if (!isset($_SESSION['login'])) {
 		</div>
 		<div>
             <div id="nav_bar">
-                <div class="item_navbar" id="list" onclick="navBarSelector(this.id)">
+                <div class="item_navbar" id="liste_generale" onclick="navBarSelector(this.id)">
                    <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Liste de fournitures</span>
                 </div>
                 <?php
                 if ($_SESSION['estProfesseur'] == 1 || $_SESSION['isAdmin'] == 1){
                                     echo 
-                '<div class="item_navbar" id="listCreation" onclick="navBarSelector(this.id)">
+                '<div class="item_navbar" id="liste" onclick="navBarSelector(this.id)">
                     <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Création de votre liste</span>
                 </div>';
                 }
@@ -67,8 +67,8 @@ if (!isset($_SESSION['login'])) {
                    <?php
                        $tab = filter_input(INPUT_GET, 'tab');;
                         switch ($tab) {
-                            case 'list':
-                                include 'list.php';
+                            case 'liste_generale':
+                                include 'liste_generale.php';
                                 break;
                             case 'personne':
                                 include 'personne.php';
@@ -88,11 +88,11 @@ if (!isset($_SESSION['login'])) {
                             case 'profile':
                                 include 'profile.php';
                                 break;
-                            case 'listCreation':
-                                include 'listCreation.php';
+                            case 'liste':
+                                include 'liste.php';
                                 break;
                             default:
-                                include 'list.php';
+                                include 'liste_generale.php';
                                 break;
                         }
                         
