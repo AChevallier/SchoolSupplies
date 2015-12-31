@@ -1,0 +1,13 @@
+
+table{
+    width:100%;
+}
+
+th {
+    background-color: #BF5454;
+    color: white;
+    height: 50px;
+}
+tr:nth-child(even) {
+    background-color: #FFD6D6;
+}

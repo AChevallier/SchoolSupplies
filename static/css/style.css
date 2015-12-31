@@ -121,19 +121,6 @@ box-shadow: 0 0 1px rgba(0,0,0, .75);
 {
     display: table-cell;
 }
-
-table{
-    width:100%;
-}
-
-th {
-    background-color: #BF5454;
-    color: white;
-    height: 50px;
-}
-tr:nth-child(even) {
-    background-color: #FFD6D6;
-}
 #add{
     background-color: #F7E9E9;
     border-radius: 5px;

@@ -16,28 +16,31 @@ functions.clickAdd = function(id){
 	var callback = function(data){
 		location.reload();
 	}
-	console.log(allInputs)
 	var string = '';
-	for (var i = allInputs.length - 1; i >= 0; i--) {
-		if(allInputs[i].id === 'submit')
-			continue;
-		if(allInputs[i].type === 'checkbox')
-		{
-			var check = allInputs[i].checked;
-			string += allInputs[i].id+'='+ (check ? 1 : 0);
-		}
-		else{
-			string += allInputs[i].id+'='+allInputs[i].value;
-		}		
-		if(i !== + 0)
-			string +='&';
-	};
-	for (var i = allSelects.length - 1; i >= 0; i--) {
+	if(allInputs.length > 0){
+		for (var i = allInputs.length - 1; i >= 0; i--) {
+			if(allInputs[i].id === 'submit')
+				continue;
+			if(allInputs[i].type === 'checkbox')
+			{
+				var check = allInputs[i].checked;
+				string += allInputs[i].id+'='+ (check ? 1 : 0);
+			}
+			else{
+				string += allInputs[i].id+'='+allInputs[i].value;
+			}		
+			if(i !== + 0)
+				string +='&';
+		};
+	}
+	if(allSelects.length > 0){
+		for (var i = allSelects.length - 1; i >= 0; i--) {
 
-		string += '&'+allSelects[i].id+'='+allSelects[i].value;
-		if(i !== + 0)
-			string +='&';
-	};
+			string += '&'+allSelects[i].id+'='+allSelects[i].value;
+			if(i !== + 0)
+				string +='&';
+		};
+	}
 	string += '&select='+select;
 	core.ajaxRequest('../controller/api_add.php',callback, 'POST', string);
 	location.reload();

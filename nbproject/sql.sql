@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 31 Décembre 2015 à 01:19
+-- Généré le :  Jeu 31 Décembre 2015 à 19:04
 -- Version du serveur :  5.5.38
 -- Version de PHP :  5.6.2
 
@@ -13,6 +13,26 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `schoolsu`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `affectation_classe`
+--
+
+CREATE TABLE `affectation_classe` (
+  `prof_id` int(11) NOT NULL,
+  `matiere_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `affectation_classe`
+--
+
+INSERT INTO `affectation_classe` (`prof_id`, `matiere_id`) VALUES
+(3, 7),
+(3, 8),
+(5, 11);
 
 -- --------------------------------------------------------
 
@@ -45,7 +65,7 @@ CREATE TABLE `fourniture` (
   `nom` varchar(255) NOT NULL,
   `matiere_id` int(11) NOT NULL,
   `group_niveau_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `fourniture`
@@ -55,7 +75,8 @@ INSERT INTO `fourniture` (`id`, `nom`, `matiere_id`, `group_niveau_id`) VALUES
 (3, 'stylo plume', 7, NULL),
 (4, 'crayon de couleur', 9, NULL),
 (5, 'basket', 10, NULL),
-(6, 'violon', 11, NULL);
+(6, 'violon', 11, NULL),
+(8, 'calculette', 8, NULL);
 
 -- --------------------------------------------------------
 
@@ -104,6 +125,7 @@ CREATE TABLE `link_prof` (
 
 INSERT INTO `link_prof` (`prof_id`, `classe_id`) VALUES
 (3, 1),
+(5, 1),
 (3, 15);
 
 -- --------------------------------------------------------
@@ -116,18 +138,19 @@ CREATE TABLE `liste` (
 `id` int(11) NOT NULL,
   `prof_id` int(11) NOT NULL,
   `fourniture_id` int(11) NOT NULL,
+  `matiere_id` int(11) NOT NULL,
   `quantite` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `liste`
 --
 
-INSERT INTO `liste` (`id`, `prof_id`, `fourniture_id`, `quantite`) VALUES
-(1, 1, 3, 2),
-(2, 5, 4, 5),
-(4, 1, 5, 6),
-(5, 6, 4, 3);
+INSERT INTO `liste` (`id`, `prof_id`, `fourniture_id`, `matiere_id`, `quantite`) VALUES
+(1, 3, 3, 7, 5),
+(2, 3, 8, 8, 6),
+(3, 5, 6, 11, 2),
+(4, 5, 3, 11, 7);
 
 -- --------------------------------------------------------
 
@@ -206,6 +229,12 @@ INSERT INTO `personne` (`id`, `nom`, `prenom`, `dateNaissance`, `estProfesseur`,
 --
 
 --
+-- Index pour la table `affectation_classe`
+--
+ALTER TABLE `affectation_classe`
+ ADD PRIMARY KEY (`prof_id`,`matiere_id`), ADD KEY `matiere_id` (`matiere_id`);
+
+--
 -- Index pour la table `classe`
 --
 ALTER TABLE `classe`
@@ -239,7 +268,7 @@ ALTER TABLE `link_prof`
 -- Index pour la table `liste`
 --
 ALTER TABLE `liste`
- ADD PRIMARY KEY (`id`,`prof_id`,`fourniture_id`), ADD KEY `prof_id` (`prof_id`), ADD KEY `fourniture_id` (`fourniture_id`);
+ ADD PRIMARY KEY (`id`,`prof_id`,`fourniture_id`,`matiere_id`), ADD KEY `prof_id` (`prof_id`), ADD KEY `fourniture_id` (`fourniture_id`), ADD KEY `matiere_id` (`matiere_id`);
 
 --
 -- Index pour la table `matiere`
@@ -272,12 +301,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 -- AUTO_INCREMENT pour la table `fourniture`
 --
 ALTER TABLE `fourniture`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `liste`
 --
 ALTER TABLE `liste`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `matiere`
 --
@@ -296,6 +325,13 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- Contraintes pour les tables exportées
 --
+
+--
+-- Contraintes pour la table `affectation_classe`
+--
+ALTER TABLE `affectation_classe`
+ADD CONSTRAINT `affectation_classe_ibfk_2` FOREIGN KEY (`matiere_id`) REFERENCES `matiere` (`id`),
+ADD CONSTRAINT `affectation_classe_ibfk_1` FOREIGN KEY (`prof_id`) REFERENCES `personne` (`id`);
 
 --
 -- Contraintes pour la table `classe`
@@ -327,5 +363,6 @@ ADD CONSTRAINT `link_prof_ibfk_2` FOREIGN KEY (`classe_id`) REFERENCES `classe` 
 -- Contraintes pour la table `liste`
 --
 ALTER TABLE `liste`
-ADD CONSTRAINT `liste_ibfk_2` FOREIGN KEY (`fourniture_id`) REFERENCES `fourniture` (`id`),
-ADD CONSTRAINT `liste_ibfk_1` FOREIGN KEY (`prof_id`) REFERENCES `personne` (`id`);
+ADD CONSTRAINT `liste_ibfk_3` FOREIGN KEY (`matiere_id`) REFERENCES `matiere` (`id`),
+ADD CONSTRAINT `liste_ibfk_1` FOREIGN KEY (`prof_id`) REFERENCES `personne` (`id`),
+ADD CONSTRAINT `liste_ibfk_2` FOREIGN KEY (`fourniture_id`) REFERENCES `fourniture` (`id`);

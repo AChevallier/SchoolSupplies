@@ -1,0 +1,27 @@
+
+td{
+	width: 40px;
+	height: 55px;
+	border-right: 3px solid #FFFFFF;
+}
+
+table{
+	height: 550px
+	border: none;
+	border-collapse:collapse;
+}
+tr{
+	height: 55px
+}
+
+.axeY{
+	border-left: 2px solid #000000;
+}
+
+.red{
+	background-color: red;
+}
+
+.green{
+	background-color: green;
+}

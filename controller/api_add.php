@@ -56,11 +56,19 @@ switch ($_POST['select']) {
 			}
 			break;
 		case 'liste':
-			$req = $bdd->prepare('INSERT INTO liste VALUES(\'\',:prof, :fourniture, :quantite)');
+			$req = $bdd->prepare('INSERT INTO liste VALUES(\'\',:prof, :fourniture,:matiere, :quantite)');
 			$req->execute(array(
 				'prof' => $_SESSION["id"],
 				'fourniture' => $_POST['fourn'],
+				'matiere' => $_POST['matiere'],
 				'quantite' => $_POST['quantite']
+				));
+			break;
+		case 'affectation_classe':
+			$req = $bdd->prepare('INSERT INTO affectation_classe VALUES (:prof, :matiere)');
+			$req->execute(array(
+				'prof' => $_POST['prof'],
+				'matiere' => $_POST['matiere']
 				));
 			break;
 		default:

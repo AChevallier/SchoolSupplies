@@ -7,31 +7,32 @@
       <div class="Row">
           <div class="Column">
               <div class="input">
-                <label class="label">Matière:</label>
-                <select id="matiere">
-                  <?php
-                    try
-                    {
-                      $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                    }
-                    catch(Exception $e)
-                    {
-                            die('Erreur : '.$e->getMessage());
-                    }
-                    $result = $bdd->query("SELECT m.id as id, m.nom as nom FROM matiere m, affectation_classe ac WHERE m.id = ac.matiere_id AND ac.prof_id =".$_SESSION['id']);
-                    foreach ($result as $row) {            
-                      echo'<option value='.$row['id'].'>'.$row['nom'].'</option>';
-                    }
-                  ?>
-                </select>
+                  <label class="label">Professeurs:</label>
+                  <select id="prof">
+                    <option value="-1">---</option>
+                    <?php
+                      try
+                      {
+                        $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
+                      }
+                      catch(Exception $e)
+                      {
+                              die('Erreur : '.$e->getMessage());
+                      }
+                      $result = $bdd->query("SELECT id, nom, prenom FROM personne WHERE estProfesseur = 1");
+                      foreach ($result as $row) {            
+                        echo'<option value='.$row['id'].'>'.$row['prenom'].' '.$row['nom'].'</option>';
+                      }
+                    ?>
+                  </select>
               </div>
+          </div>
+      </div>
+      <div class="Row">
+          <div class="Column">
               <div class="input">
-                  <label class="label">Quantité:</label>
-                  <input type="text" id="quantite"></input>
-              </div>
-              <div class="input">
-                  <label class="label">Fournitures:</label>
-                  <select id="famille_four">
+                  <label class="label">Matières:</label>
+                  <select id="matiere">
                     <option value="-1">---</option>
                     <?php
                       try
@@ -48,10 +49,6 @@
                       }
                     ?>
                   </select>
-                  <select id="fourn">
-                    <option value="-1">---</option>
-
-                  </select>
               </div>
           </div>
       </div>
@@ -67,9 +64,8 @@
           <thead>
             <tr>
               <td></td>
-              <th scope="col">ID</th>
-              <th scope="col">Quantité</th>
-              <th scope="col">Fournitures</th>
+              <th scope="col">Prénom professeur</th>
+              <th scope="col">Nom professeur</th>
               <th scope="col">Matière</th>
             </tr>
           </thead>
@@ -83,13 +79,12 @@
             {
                     die('Erreur : '.$e->getMessage());
             }
-            $result = $bdd->query("SELECT l.id as id, l.quantite as quantite, f.nom as fnom, m.nom as matiere FROM liste l, personne p, fourniture f, matiere m WHERE l.prof_id = p.id AND l.fourniture_id = f.id AND l.matiere_id = m.id AND p.id = ".$_SESSION['id']);
+            $result = $bdd->query("SELECT p.nom as nom, p.prenom prenom, m.nom as matiere FROM personne p, affectation_classe ac, matiere m WHERE ac.prof_id = p.id AND ac.matiere_id = m.id");
             foreach ($result as $row) {            
               echo'<tr id="liste_'.$row['id'].'">';
               echo "<td style='width:10px;'><input type='checkbox'></input></td>";
-              echo'<td>'.$row['id'].'</td>';
-              echo'<td>'.$row['quantite'].'</td>';
-              echo'<td>'.$row['fnom'].'</td>';
+              echo'<td>'.$row['nom'].'</td>';
+              echo'<td>'.$row['prenom'].'</td>';
               echo'<td>'.$row['matiere'].'</td>';
               echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
               echo'</tr>';
@@ -100,16 +95,5 @@
     </div>
 </div>
 <script type="text/javascript">
-var famille_four = document.getElementById('famille_four');
-var fourn = document.getElementById('fourn');
 
-famille_four.onchange = function() {
- console.log(this.selectedOptions[0]);
- var callback = function(data){    
-  fourn.innerHTML = data;
- }
- string = 'select=matiereToFourn&idMatiere='+this.selectedOptions[0].value;
- core.ajaxRequest('../controller/api_various.php',callback, 'POST', string);
- fourn.innerHTML = '<option value="-1">---</option>';
-}
 </script>

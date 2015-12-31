@@ -13,6 +13,7 @@ if (!isset($_SESSION['login'])) {
             <script src="../static/js/function.js"></script>
             <link rel="stylesheet" href="../static/css/style.css">
             <link rel="stylesheet" href="../static/css/index.css">
+            <link rel="stylesheet" id='tablecss' href="../static/css/table.css">
 	</head>
 	<body>
 		<div id="top_bar">
@@ -23,9 +24,14 @@ if (!isset($_SESSION['login'])) {
 		</div>
 		<div>
             <div id="nav_bar">
-                <div class="item_navbar" id="liste_generale" onclick="navBarSelector(this.id)">
+                <?php
+                if ($_SESSION['estProfesseur'] == 0 || $_SESSION['isAdmin'] == 1){
+                                    echo 
+                '<div class="item_navbar" id="liste_generale" onclick="navBarSelector(this.id)">
                    <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Liste de fournitures</span>
-                </div>
+                </div>';
+                }
+                ?>
                 <?php
                 if ($_SESSION['estProfesseur'] == 1 || $_SESSION['isAdmin'] == 1){
                                     echo 
@@ -35,7 +41,7 @@ if (!isset($_SESSION['login'])) {
                 }
                 ?>
                
-            <?php 
+                <?php 
                 if ($_SESSION['isAdmin'] == 1)
                 {
                     echo 
@@ -50,6 +56,9 @@ if (!isset($_SESSION['login'])) {
                 </div>
                 <div class="item_navbar" id="fourniture" onclick="navBarSelector(this.id)">
                     <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des fournitures</span>
+                </div>
+                <div class="item_navbar" id="affectation_classe" onclick="navBarSelector(this.id)">
+                    <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Affectation de classe</span>
                 </div>';
                 }
             ?>
@@ -91,8 +100,11 @@ if (!isset($_SESSION['login'])) {
                             case 'liste':
                                 include 'liste.php';
                                 break;
+                            case 'affectation_classe':
+                                include 'affectation_classe.php';
+                                break;
                             default:
-                                include 'liste_generale.php';
+                                include 'profile.php';
                                 break;
                         }
                         
