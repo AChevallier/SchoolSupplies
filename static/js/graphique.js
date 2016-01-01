@@ -5,7 +5,7 @@ for (var i = data.length - 1; i >= 0; i--) {
 	 	maximum = data[i].quantite
 };
 document.getElementById('max').innerHTML = maximum;
-var color = ['red', 'green', 'deepskyblue', 'yellow']
+var color = ['red', 'green', 'deepskyblue', 'yellow', 'firebrick', 'cyan', 'azure', 'chocolate', 'slategrey']
 
 function addA(data){
 	var table = document.getElementsByTagName('table')[0];
@@ -18,7 +18,7 @@ function addA(data){
 				td.classList.add('axeY');
 			}
 			if( maximum-data[y].quantite < i ){
-				td.classList.add(color[y]);
+				td.style.backgroundColor = color[y];
 			}
 			if( maximum-data[y].quantite == i ){
 				var tdText = document.createTextNode(data[y].quantite);
@@ -36,4 +36,4 @@ function addA(data){
 		table.appendChild(tr);
 	}
 }
-addA(data)
+addA(data);
