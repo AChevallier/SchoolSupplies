@@ -16,6 +16,7 @@
 		<tr>
 			<th>Quantité</th>
 			<th>Fourniture</th>
+			<th>Matière</th>
 		</tr>
 		<?php
             try
@@ -26,18 +27,20 @@
             {
                     die('Erreur : '.$e->getMessage());
             }
-            $result = $bdd->query("SELECT f.nom as nom, MAX(l.quantite) as quantite
-								FROM fourniture f, liste l, link_eleve le, link_prof lp
+            $result = $bdd->query("SELECT f.nom as nom, MAX(l.quantite) as quantite, m.nom as matiere
+								FROM fourniture f, liste l, link_eleve le, link_prof lp, matiere m
 								WHERE f.id = l.fourniture_id
 								AND lp.classe_id = le.classe_id
 								AND l.prof_id = lp.prof_id
+								AND f.matiere_id = m.id
 								AND le.eleve_id = ".$_SESSION['id']."
-								GROUP BY f.id"
+								GROUP BY m.id,f.id"
 			);
             foreach ($result as $row) {            
               echo'<tr id="liste_'.$row['id'].'">';
               echo'<td>'.$row['quantite'].'</td>';
               echo'<td>'.$row['nom'].'</td>';
+              echo'<td>'.$row['matiere'].'</td>';
               echo'</tr>';
             }
         ?>

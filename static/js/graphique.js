@@ -1,8 +1,8 @@
 "use strict";
 
-var data = [{'nom':'toto', 'value':8}, {'nom':'tutu', 'value':5}];
+var data = [{'nom':'toto', 'value':4}, {'nom':'tutu', 'value':5}, {'nom':'alal', 'value':3}];
 
-var color = ['red', 'green', 'yellow', 'grey']
+var color = ['red', 'green', 'deepskyblue', 'yellow']
 
 function addA(data){
 	var table = document.getElementsByTagName('table')[0];

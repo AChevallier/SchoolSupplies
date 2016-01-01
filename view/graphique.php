@@ -4,6 +4,7 @@
 	<table>
 	
 	</table>
+	<div id="horizontal_bar"></div>
 0
 </div>
 <script type="text/javascript">

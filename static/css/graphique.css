@@ -25,3 +25,16 @@ tr{
 .green{
 	background-color: green;
 }
+
+.deepskyblue{
+	background-color: deepskyblue;
+}
+
+.yellow{
+	background-color: yellow;
+}
+
+#horizontal_bar{
+	border: 1px solid #000000;
+	width: 550px;
+}
