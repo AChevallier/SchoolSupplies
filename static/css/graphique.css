@@ -38,3 +38,12 @@ tr{
 	border: 1px solid #000000;
 	width: 550px;
 }
+.libelle{
+	width: 40px;
+	font-size: 75%;
+	-webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
