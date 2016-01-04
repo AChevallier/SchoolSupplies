@@ -10,16 +10,19 @@
                     <div class="input">
                         <label class="label">Nom:</label>
                         <input type="text" id="nom"></input>
+                        <span id="erreur_nom" class="erreur"></span>
                     </div>
                     <div class="input">
                         <label class="label">Prenom:</label>
                         <input type="text" id="prenom"></input>
+                        <span id="erreur_prenom" class="erreur"></span>
                     </div>
                 </div>
                 <div class="Column">
                     <div class="input">
                         <label class="label">Date de naissance</label>
                         <input type="date" id="ddn"></input>
+                        <span id="erreur_ddn" class="erreur"></span>
                     </div>
                     <div class="input">
                         <label class="label">EstProfesseur:</label>
@@ -30,11 +33,13 @@
                     <div class="input">
                         <label class="label">Login:</label>
                         <input type="text" id="login" value='.'></input>
+                        <span id="erreur_login" class="erreur"></span>
                     </div>
-                    <div class="input">
+<!--                    <div class="input">
                         <label class="label">Mot de passe:</label>
                         <input type="text" id="mdp"></input>
-                    </div>
+                        <span id="erreur_mdp" class="erreur"></span>
+                    </div>-->
                 </div>
             </div>
             <div>
@@ -90,15 +95,7 @@
           </thead>
           <tbody id="body_table">
             <?php
-            try
-            {
-              $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-            }
-            catch(Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
-            $result = $bdd->query("SELECT id,nom, prenom, dateNaissance, estProfesseur, login FROM personne;");
+            $result = $bdd->query("SELECT id,nom, prenom, DATE_FORMAT(dateNaissance, '%d-%m-%Y') as date, estProfesseur, login FROM personne;");
             foreach ($result as $row) {
               if($row['estProfesseur'] == 1){
                 $prof = 'checked="checked"';
@@ -111,7 +108,7 @@
               echo'<td>'.$row['id'].'</td>';
               echo'<td>'.$row['nom'].'</td>';
               echo'<td>'.$row['prenom'].'</td>';
-              echo'<td>'.$row['dateNaissance'].'</td>';
+              echo'<td>'.$row['date'].'</td>';
               echo'<td><input disabled type="checkbox" '.$prof.'></input></td>';
               echo'<td>'.$row['login'].'</td>';
               echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
@@ -128,10 +125,10 @@
   var prenom = document.getElementById('prenom');
   var login = document.getElementById('login');
   nom.onkeyup = function(){
-    login.value = prenom.value.toLowerCase() + '.' + this.value.toLowerCase()
+    login.value = prenom.value.toLowerCase() + '.' + this.value.toLowerCase();
   } 
   prenom.onkeyup = function(){
-    login.value = this.value.toLowerCase() + '.' + nom.value.toLowerCase()
+    login.value = this.value.toLowerCase() + '.' + nom.value.toLowerCase();
   }  
   var selectFilter = document.getElementById('select_filter');
   selectFilter.onchange = function(){

@@ -11,14 +11,6 @@
                   <select id="prof">
                     <option value="-1">---</option>
                     <?php
-                      try
-                      {
-                        $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                      }
-                      catch(Exception $e)
-                      {
-                              die('Erreur : '.$e->getMessage());
-                      }
                       $result = $bdd->query("SELECT id, nom, prenom FROM personne WHERE estProfesseur = 1");
                       foreach ($result as $row) {            
                         echo'<option value='.$row['id'].'>'.$row['prenom'].' '.$row['nom'].'</option>';
@@ -35,14 +27,6 @@
                   <select id="matiere">
                     <option value="-1">---</option>
                     <?php
-                      try
-                      {
-                        $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                      }
-                      catch(Exception $e)
-                      {
-                              die('Erreur : '.$e->getMessage());
-                      }
                       $result = $bdd->query("SELECT id, nom FROM matiere");
                       foreach ($result as $row) {            
                         echo'<option value='.$row['id'].'>'.$row['nom'].'</option>';
@@ -71,24 +55,16 @@
           </thead>
           <tbody id='body_table'>
           <?php
-            try
-            {
-              $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-            }
-            catch(Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
-            $result = $bdd->query("SELECT p.nom as nom, p.prenom prenom, m.nom as matiere FROM personne p, affectation_classe ac, matiere m WHERE ac.prof_id = p.id AND ac.matiere_id = m.id");
-            foreach ($result as $row) {            
-              echo'<tr id="liste_'.$row['id'].'">';
-              echo "<td style='width:10px;'><input type='checkbox'></input></td>";
-              echo'<td>'.$row['nom'].'</td>';
-              echo'<td>'.$row['prenom'].'</td>';
-              echo'<td>'.$row['matiere'].'</td>';
-              echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
-              echo'</tr>';
-            }
+            $result = $bdd->query("SELECT  p.nom as nom, p.prenom prenom, m.nom as matiere FROM personne p, affectation_classe ac, matiere m WHERE ac.prof_id = p.id AND ac.matiere_id = m.id");
+                foreach ($result as $row) {            
+                  echo'<tr>';
+                  echo "<td style='width:10px;'><input type='checkbox'></input></td>";
+                  echo'<td>'.$row['nom'].'</td>';
+                  echo'<td>'.$row['prenom'].'</td>';
+                  echo'<td>'.$row['matiere'].'</td>';
+                  echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
+                  echo'</tr>';
+                }  
           ?>
           </tbody>
         </table>

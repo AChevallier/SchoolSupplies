@@ -1,12 +1,5 @@
 <?php
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-}
-catch(Exception $e)
-{
-        die('Erreur : '.$e->getMessage());
-}
+require("../controller/api_connect_db.php");
 switch ($_POST['select']) {
 		case 'matiereToFourn':
 			$result = $bdd->query("SELECT id, nom FROM fourniture where matiere_id = ".$_POST['idMatiere'].";");

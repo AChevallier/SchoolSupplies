@@ -10,14 +10,6 @@
                 <label class="label">Matière:</label>
                 <select id="matiere">
                   <?php
-                    try
-                    {
-                      $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                    }
-                    catch(Exception $e)
-                    {
-                            die('Erreur : '.$e->getMessage());
-                    }
                     $result = $bdd->query("SELECT m.id as id, m.nom as nom FROM matiere m, affectation_classe ac WHERE m.id = ac.matiere_id AND ac.prof_id =".$_SESSION['id']);
                     foreach ($result as $row) {            
                       echo'<option value='.$row['id'].'>'.$row['nom'].'</option>';
@@ -28,20 +20,13 @@
               <div class="input">
                   <label class="label">Quantité:</label>
                   <input type="text" id="quantite"></input>
+                  <span id="erreur_quantite" class="erreur"></span>
               </div>
               <div class="input">
                   <label class="label">Fournitures:</label>
                   <select id="famille_four">
                     <option value="-1">---</option>
                     <?php
-                      try
-                      {
-                        $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                      }
-                      catch(Exception $e)
-                      {
-                              die('Erreur : '.$e->getMessage());
-                      }
                       $result = $bdd->query("SELECT id, nom FROM matiere");
                       foreach ($result as $row) {            
                         echo'<option value='.$row['id'].'>'.$row['nom'].'</option>';
@@ -67,27 +52,17 @@
           <thead>
             <tr>
               <td></td>
-              <th scope="col">ID</th>
               <th scope="col">Quantité</th>
-              <th scope="col">Fournitures</th>
+              <th scope="col">Fourniture</th>
               <th scope="col">Matière</th>
             </tr>
           </thead>
           <tbody id='body_table'>
           <?php
-            try
-            {
-              $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-            }
-            catch(Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
             $result = $bdd->query("SELECT l.id as id, l.quantite as quantite, f.nom as fnom, m.nom as matiere FROM liste l, personne p, fourniture f, matiere m WHERE l.prof_id = p.id AND l.fourniture_id = f.id AND l.matiere_id = m.id AND p.id = ".$_SESSION['id']);
             foreach ($result as $row) {            
               echo'<tr id="liste_'.$row['id'].'">';
               echo "<td style='width:10px;'><input type='checkbox'></input></td>";
-              echo'<td>'.$row['id'].'</td>';
               echo'<td>'.$row['quantite'].'</td>';
               echo'<td>'.$row['fnom'].'</td>';
               echo'<td>'.$row['matiere'].'</td>';

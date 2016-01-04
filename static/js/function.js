@@ -14,7 +14,16 @@ functions.clickAdd = function(id){
 	var allSelects = document.getElementById('div_classe_col').getElementsByTagName('select');
 	var select = document.getElementsByClassName('selected_navbar')[0].id;
 	var callback = function(data){
-		location.reload();
+            var json = JSON.parse(data);
+            console.log(data)
+            if(json.length === 0){
+                location.reload();
+            }
+            else{
+            for(var key in json){
+                    document.getElementById('erreur_'+key).innerHTML = json[key];
+                }
+            }
 	}
 	var string = '';
 	if(allInputs.length > 0){
@@ -43,7 +52,6 @@ functions.clickAdd = function(id){
 	}
 	string += '&select='+select;
 	core.ajaxRequest('../controller/api_add.php',callback, 'POST', string);
-	location.reload();
 }
 
 functions.clickAddClasses = function(id, listEleves, listProfs){
@@ -52,8 +60,9 @@ functions.clickAddClasses = function(id, listEleves, listProfs){
 	var niveau = document.getElementById('niveau');
 	var string = nomInput.id+'='+nomInput.value
 	var callback = function(data){
-		console.log(data);
-		//location.reload();
+		for(var key in data){
+                    document.getElementById('erreur_'+key).innerHTML = data[key];
+                }
 	}
 	string += '&listEleves='+listEleves.toString();
 	string += '&listProfs='+listProfs.toString();

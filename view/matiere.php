@@ -10,6 +10,7 @@
               <div class="input">
                   <label class="label">Nom de la matière:</label>
                   <input type="text" id="nom_matiere" name="nom_matiere"></input>
+                  <span id="erreur_nom_matiere" class="erreur"></span>
               </div>
           </div>
       </div>
@@ -31,14 +32,6 @@
           </thead>
           <tbody id='body_table'>
           <?php
-          try
-            {
-              $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-            }
-            catch(Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
             $result = $bdd->query("SELECT id,nom FROM matiere;");
             foreach ($result as $row) {
               echo'<tr id="matiere_'.$row['id'].'">';

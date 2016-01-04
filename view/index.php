@@ -4,6 +4,9 @@ if (!isset($_SESSION['login'])) {
     header ('Location: ../view/login.php');
     exit();
 }
+else{
+    require("../controller/api_connect_db.php");
+}
 ?>
 <html>
 	<head>
@@ -29,6 +32,9 @@ if (!isset($_SESSION['login'])) {
                                     echo 
                 '<div class="item_navbar" id="liste_generale" onclick="navBarSelector(this.id)">
                    <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Liste de fournitures</span>
+                </div>
+                <div class="item_navbar" id="graphique" onclick="navBarSelector(this.id)">
+                    <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Graphique</span>
                 </div>';
                 }
                 ?>
@@ -63,9 +69,6 @@ if (!isset($_SESSION['login'])) {
                 }
             ?>
                 
-                <div class="item_navbar" id="graphique" onclick="navBarSelector(this.id)">
-                    <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Graphique</span>
-                </div>
                 <div class="item_navbar profile" id="profile" onclick="navBarSelector(this.id)">
                     <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Mon Profil</span>
                 </div>
@@ -116,7 +119,7 @@ if (!isset($_SESSION['login'])) {
             window.onload = function(){
                 var dict = core.variableGET();
                 if(dict === null)
-                    var selected_page = document.getElementById('list');
+                    var selected_page = document.getElementById('profile');
                 else
                     var selected_page = document.getElementById(dict.tab);
                 selected_page.classList.add('selected_navbar')

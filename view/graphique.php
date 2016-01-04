@@ -13,15 +13,6 @@
 var style  = document.getElementById('tablecss');
 style.remove();
 <?php
-	session_start();
-	try
-	{
-	  $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-	}
-	catch(Exception $e)
-	{
-	        die('Erreur : '.$e->getMessage());
-	}
 	$result = $bdd->query("SELECT MAX(l.quantite) as quantite, m.nom as nom
 						FROM fourniture f, liste l, link_eleve le, link_prof lp, matiere m
 						WHERE f.id = l.fourniture_id

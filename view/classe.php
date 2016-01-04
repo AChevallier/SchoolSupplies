@@ -17,14 +17,6 @@
                 <label class="label">Niveau:</label>
                 <select id='niveau'>
                   <?php
-                      try
-                        {
-                          $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                        }
-                        catch(Exception $e)
-                        {
-                                die('Erreur : '.$e->getMessage());
-                        }
                         $result = $bdd->query("SELECT id, nom FROM niveau");
                         foreach ($result as $row) {
                           echo '<option value="'.$row['id'].'">'.$row['nom'].'</option>';
@@ -41,14 +33,6 @@
                   <select id='select_eleve'>
                     <option id="-1">----</option>
                     <?php
-                      try
-                        {
-                          $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                        }
-                        catch(Exception $e)
-                        {
-                                die('Erreur : '.$e->getMessage());
-                        }
                         $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 0 AND p.id NOT IN (SELECT eleve_id FROM link_eleve)");
                         foreach ($result as $row) {
                           echo '<option value="'.$row['id'].'">'.$row['prenom'].'-'.$row['nom'].'</option>';
@@ -66,14 +50,6 @@
                   <select id='select_prof'>
                    <option id='-2'>----</option>
                     <?php
-                      try
-                        {
-                          $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                        }
-                        catch(Exception $e)
-                        {
-                                die('Erreur : '.$e->getMessage());
-                        }
                         $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 1;");
                         foreach ($result as $row) {
                           echo '<option value="'.$row['id'].'">'.$row['prenom'].'-'.$row['nom'].'</option>';
@@ -107,14 +83,6 @@
           </thead>
           <tbody id='body_table'>
             <?php
-            try
-            {
-              $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-            }
-            catch(Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
             $result = $bdd->query("SELECT c.id as id, c.nom as nom, n.nom as niveau  FROM classe c, niveau n WHERE c.niveau_id = n.id;");
             foreach ($result as $row) {
               $title_eleve = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_eleve le, personne p WHERE c.id = le.classe_id AND le.eleve_id = p.id AND c.id = ".$row['id'].";");

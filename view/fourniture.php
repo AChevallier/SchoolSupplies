@@ -10,19 +10,12 @@
               <div class="input">
                   <label class="label">Nom de la fourniture:</label>
                   <input type="text" id="nom_fourniture"></input>
+                  <span id="erreur_nom_fourniture" class="erreur"></span>
               </div>
               <div class="input">
                   <label class="label">Groupe de la fourniture:</label>
                   <select id='select_matiere'>
                   <?php
-                    try
-                      {
-                        $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-                      }
-                      catch(Exception $e)
-                      {
-                              die('Erreur : '.$e->getMessage());
-                      }
                       $result = $bdd->query("SELECT id, nom FROM matiere;");
                       foreach ($result as $row) {
                         echo '<option value="'.$row['id'].'">'.$row['nom'].'</option>';
@@ -30,15 +23,6 @@
                   ?>
                   </select>
               </div>
-              <!--   <div class="input">
-                  <label class="label">Niveau de la fourniture:</label>
-                  <select>
-                    <option value="all">2nd</option>
-                    <option value="maths">1ère</option>
-                    <option value="fr">Terminal</option>
-                    <option value="hist">Tous</option>
-                  </select>
-              </div> -->
           </div>
       </div>
       <div>
@@ -60,14 +44,6 @@
           </thead>
           <tbody id='body_table'>
           <?php
-          try
-            {
-              $bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-            }
-            catch(Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
             $result = $bdd->query("SELECT f.id as id,f.nom,m.nom as mnom FROM fourniture f, matiere m WHERE f.matiere_id = m.id;");
             foreach ($result as $row) {
               echo'<tr id="matiere_'.$row['id'].'">';

@@ -1,38 +1,54 @@
 <?php
 session_start();
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=schoolsu;charset=utf8', 'root', 'root');
-}
-catch(Exception $e)
-{
-        die('Erreur : '.$e->getMessage());
-}
+require("../controller/api_connect_db.php");
+$erreurs = [];
 switch ($_POST['select']) {
 		case 'matiere':
-			$req = $bdd->prepare('INSERT INTO matiere VALUES(\'\',:nom)');
-			$req->execute(array(
-				'nom' => $_POST["nom_matiere"]
-				));
-			break;
+                        $erreurs['nom_matiere'] = check_string($_POST["nom_matiere"]);
+                        if (count($erreurs) == 0){
+                            $req = $bdd->prepare('INSERT INTO matiere VALUES(\'\',:nom)');
+                            $req->execute(array(
+                                    'nom' => $_POST["nom_matiere"]
+                                    ));
+                            break;
+                        }
+                        print json_encode($erreurs);
+                        break;
 
 		case 'fourniture':
-			$req = $bdd->prepare('INSERT INTO fourniture VALUES(\'\',:nom, :matiere, NULL)');
-			$req->execute(array(
-				'nom' => $_POST["nom_fourniture"],
-				'matiere' => $_POST['select_matiere']
-				));
-			break;
+                        $erreurs['nom_fourniture'] = check_string($_POST["nom_fourniture"]);
+                        if(count($erreurs) == 0){
+                            $req = $bdd->prepare('INSERT INTO fourniture VALUES(\'\',:nom, :matiere, NULL)');
+                            $req->execute(array(
+                                    'nom' => $_POST["nom_fourniture"],
+                                    'matiere' => $_POST['select_matiere']
+                                    ));
+                            break;
+                        }
+			print json_encode($erreurs);
+                        break;
 		case 'personne':
-			$req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp, NULL)');
-			$req->execute(array(
+                        foreach ($_POST as $key => $value) {
+                            if(in_array($key, ['nom', 'prenom', 'login'])){
+                                $erreurs[$key] = check_string($value);
+                            }
+                            else if( $key == 'ddn'){
+                                $erreurs[$key] = check_date($value);
+                            }
+                        }
+                        if(count($erreurs) == 0){
+                            $req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp, NULL)');
+                            $req->execute(array(
 				'nom' => $_POST["nom"],
 				'prenom' => $_POST['prenom'],
 				'ddn' => $_POST['ddn'],
 				'estP' => $_POST['isTeacher'],
 				'login' => $_POST['login'],
-				'mdp' => $_POST['mdp'],
-				));
+				'mdp' => $_POST['nom'],
+				)); 
+                            break;
+                        }
+			print json_encode($erreurs);
 			break;
 		case 'classe':
 			$eleves = explode(",", $_POST["listEleves"]);
@@ -76,4 +92,35 @@ switch ($_POST['select']) {
 			break;
 	}
 $bdd = null;
+function check_string($input = '')
+{   
+    if( $input == ''){
+        return 'ne peut pas être nulle';
+    }
+    else if(is_string($input) && !is_numeric($input) && !is_null($input))
+        return;
+    return 'ce n\'est pas une string';
+}
+
+function check_date($input = ''){
+    if($input == ''){
+        return 'la date ne peut pas être nulle';
+    }
+    try {
+        $pieces = explode("-", $input);
+        $annee = $pieces[0];
+        $mois = $pieces[1];
+        $jour = $pieces[2];
+        if(checkdate($mois, $jour, $annee)){
+            return;
+        }
+        else{
+            return 'date non reconnu';
+        }
+    } catch (Exception $ex) {
+        return 'date non reconnu';
+    }
+    return 'date non reconnu';
+}
+
 ?>
