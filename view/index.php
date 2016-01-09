@@ -5,7 +5,7 @@ if (!isset($_SESSION['login'])) {
     exit();
 }
 else{
-    require("../controller/api_connect_db.php");
+    include("../controller/api_connect_db.php");
 }
 ?>
 <html>

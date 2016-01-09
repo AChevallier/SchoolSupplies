@@ -40,6 +40,11 @@ color:#f3f3f3;
 font-size:1.1em;
 }
 
+.disabled{
+    background-color :indianred;
+    box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+
 .submit:hover{
 background-color :indianred;
 box-shadow: 0 0 1px rgba(0,0,0, .75);

@@ -1,7 +1,7 @@
 <?php
     session_start();
-    require("../controller/api_connect_db.php");
     require("../fpdf.php");
+    include("../controller/api_connect_db.php");
     class PDF extends FPDF
     {
         function BasicTable($data)

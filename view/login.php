@@ -1,9 +1,9 @@
-<?php
+﻿<?php
 // on teste si le visiteur a soumis le formulaire de connexion
 if (isset($_POST['submit']) && $_POST['submit'] == 'Connexion') {
 	if ((isset($_POST['login']) && !empty($_POST['login'])) && (isset($_POST['password']) && !empty($_POST['password']))) {
 
-	require("../controller/api_connect_db.php");
+	include("../controller/api_connect_db.php");
 
 	// on teste si une entrée de la base contient ce couple login / pass
 	$sql = $bdd ->prepare('SELECT id, login, isAdmin, estProfesseur FROM personne WHERE login=:login AND password=:password');

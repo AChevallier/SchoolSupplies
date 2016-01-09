@@ -32,7 +32,7 @@
                 <div class="Column">
                     <div class="input">
                         <label class="label">Login:</label>
-                        <input type="text" id="login" value='.'></input>
+                        <input type="text" id="login"></input>
                         <span id="erreur_login" class="erreur"></span>
                     </div>
 <!--                    <div class="input">
@@ -54,12 +54,12 @@
     </div>
 
     <div id="add_csv" class="div_" style="display:none;">
-        <form>
+        <form enctype="multipart/form-data" action="../controller/import_csv.php" method="POST">
             <div class="Row">
                 <div class="Column">
                     <div class="input">
                         <label class="label">CSV:</label>
-                        <input type="file" id="csv"></input>
+                        <input type="file" name="file" id="file"></input>
                     </div>
                 </div>
             </div>
@@ -124,6 +124,29 @@
   var nom = document.getElementById('nom');
   var prenom = document.getElementById('prenom');
   var login = document.getElementById('login');
+  var bouton = document.getElementById('submit');
+  var callbackLogin = function(data){
+    if(data == 'false'){
+      login.style.border = "5px solid #ff0000";
+      bouton.classList.add('disabled');
+      bouton.disabled = true;
+    }
+    else{
+      login.style.border = '';
+      bouton.classList.remove('disabled');
+      bouton.disabled = false;
+      }
+  }
+
+  login.onblur=function(){
+    var data = "login="+login.value+'&select=loginCheck';
+    core.ajaxRequest('../controller/api_various.php', callbackLogin, 'POST', data);
+  }
+
+  prenom.onblur = function () {
+    var data = "login="+login.value+'&select=loginCheck';
+    core.ajaxRequest('../controller/api_various.php', callbackLogin, 'POST', data);
+  }
   nom.onkeyup = function(){
     login.value = prenom.value.toLowerCase() + '.' + this.value.toLowerCase();
   } 
