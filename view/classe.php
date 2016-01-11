@@ -1,5 +1,8 @@
 
 <div>
+    <?php
+    if ($_SESSION['isAdmin'] == 1):
+    ?>
     <div id="add"  onclick="core.collapsble('div_classe_col','icon_add')"><img src="../static/img/plus.png" id="icon_add"/>
         Ajouter une classe
     </div>
@@ -110,6 +113,11 @@
           </tbody>
         </table>
     </div>
+    <?php
+        else:
+    ?>
+    Il ne faut pas être ici
+    <?php endif ?>
 </div>
 <script type="text/javascript">
  var selectEleve = document.getElementById('select_eleve');

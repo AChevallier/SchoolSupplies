@@ -11,6 +11,11 @@
             echo $query;
             $count = $bdd->exec($query);
     }
+    elseif($_POST['select'] == 'affectation_classe'){
+        $query = "DELETE FROM affectation_classe WHERE prof_id = ".$_POST['idB']." AND matiere_id = ".$_POST['idA'].";";
+        echo $query;
+        $count = $bdd->exec($query);
+    }
     else{
             $query = "DELETE FROM ".$_POST['select']." WHERE id = ".$_POST['id'].";";
             echo $query;

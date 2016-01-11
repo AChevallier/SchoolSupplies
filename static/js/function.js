@@ -6,7 +6,16 @@ functions.clickDelete = function(id){
 	var callback = function(data){
 		document.getElementById(id).remove()
 	}
-	core.ajaxRequest('../controller/api_delete.php',callback, 'POST', 'select='+select+'&id='+id.substring(id.indexOf('_')+1) );
+        var ids;
+        if(select == 'affectation_classe'){
+            var idBefore = id.substring(0,id.indexOf("_"));
+            var idAfter = id.substring(id.indexOf('_')+1);
+            ids = 'idB='+idBefore+'&idA='+idAfter;
+        }
+        else{
+            ids = 'id='+id.substring(id.indexOf('_')+1);
+        }
+	core.ajaxRequest('../controller/api_delete.php',callback, 'POST', 'select='+select+'&'+ids );
 }
 
 functions.clickAdd = function(id){
@@ -70,4 +79,48 @@ functions.clickAddClasses = function(id, listEleves, listProfs){
 	string += '&select='+select;
 	core.ajaxRequest('../controller/api_add.php',callback, 'POST', string);
 	//location.reload();
+}
+
+functions.clickModif = function(idBdD){
+    var select = document.getElementsByClassName('selected_navbar')[0].id;
+    var thisTd = document.getElementById(idBdD).childNodes;
+    var id = idBdD.substring(idBdD.indexOf('_')+1);
+    
+    for(var i= 0; i <= thisTd.length-1; i++){
+        if(i >= 2 && i < thisTd.length-1)
+        {
+            var input = document.createElement("input");
+            input.value = thisTd[i].innerText;
+            input.size = thisTd[i].innerText.length -1;
+            input.type = 'text';
+            input.id = 'input_'+thisTd[i].id;
+            thisTd[i].innerText = '';
+            thisTd[i].appendChild(input);
+        }
+        if( i == thisTd.length - 1){
+            thisTd[i].innerText = '';
+            var oImg=document.createElement("img");
+            oImg.setAttribute('src', '../static/img/validate.png');
+            oImg.onclick = callAjaxValidate;
+            thisTd[i].appendChild(oImg);
+        }
+    }
+    
+    function callAjaxValidate(){
+        var tr = this.parentElement.parentElement.childNodes;
+        var string = 'select='+select+'&';
+        for (var i = tr.length - 1; i >= 0; i--) {
+            if(tr[i].childNodes[0].type === 'text'){
+                string += tr[i].id+'='+tr[i].childNodes[0].value;	
+                if(i !== + 0)
+                    string +='&';
+            }   
+        }
+        //core.ajaxRequest('../controller/page_modif.php',callback, 'POST', string);
+        console.log(string)
+    }
+    var callback = function(data){
+        location.reload();
+    }
+    console.log(select+'||'+id);
 }

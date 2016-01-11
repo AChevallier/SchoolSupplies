@@ -43,6 +43,9 @@ else{
                                     echo 
                 '<div class="item_navbar" id="liste" onclick="navBarSelector(this.id)">
                     <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Création de votre liste</span>
+                </div>
+                <div class="item_navbar" id="fourniture" onclick="navBarSelector(this.id)">
+                    <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des fournitures</span>
                 </div>';
                 }
                 ?>
@@ -59,9 +62,6 @@ else{
                 </div>
                 <div class="item_navbar" id="matiere" onclick="navBarSelector(this.id)">
                     <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des matières</span>
-                </div>
-                <div class="item_navbar" id="fourniture" onclick="navBarSelector(this.id)">
-                    <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Gestion des fournitures</span>
                 </div>
                 <div class="item_navbar" id="affectation_classe" onclick="navBarSelector(this.id)">
                     <span class="triangle_item_navbar"></span><span class="inside_item_navbar">Affectation de classe</span>
