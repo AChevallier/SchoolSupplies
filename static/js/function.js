@@ -89,13 +89,31 @@ functions.clickModif = function(idBdD){
     for(var i= 0; i <= thisTd.length-1; i++){
         if(i >= 2 && i < thisTd.length-1)
         {
+            var typeinput;
+            var valueinput;
             var input = document.createElement("input");
-            input.value = thisTd[i].innerText;
-            input.size = thisTd[i].innerText.length -1;
-            input.type = 'text';
+            if( thisTd[i].firstChild.type === 'checkbox'){
+                console.log(thisTd[i].firstChild.value)
+                input.type = 'checkbox';
+                input.checked = thisTd[i].firstChild.checked;
+            }
+            else if( thisTd[i].className === 'date'){
+                console.log(thisTd[i].firstChild.value)
+                input.type = 'date';
+                input.value = thisTd[i].innerText;
+                input.size = thisTd[i].innerText.length;
+            }
+            else{
+                input.type = 'text'; 
+                input.value = thisTd[i].innerText;
+                input.size = thisTd[i].innerText.length;
+            }
             input.id = 'input_'+thisTd[i].id;
             thisTd[i].innerText = '';
             thisTd[i].appendChild(input);
+            input.onkeyup = function(){
+                this.size = this.value.length;
+            }
         }
         if( i == thisTd.length - 1){
             thisTd[i].innerText = '';
@@ -109,6 +127,7 @@ functions.clickModif = function(idBdD){
     function callAjaxValidate(){
         var tr = this.parentElement.parentElement.childNodes;
         var string = 'select='+select+'&';
+        string += 'id='+id+'&';
         for (var i = tr.length - 1; i >= 0; i--) {
             if(tr[i].childNodes[0].type === 'text'){
                 string += tr[i].id+'='+tr[i].childNodes[0].value;	
@@ -116,8 +135,7 @@ functions.clickModif = function(idBdD){
                     string +='&';
             }   
         }
-        //core.ajaxRequest('../controller/page_modif.php',callback, 'POST', string);
-        console.log(string)
+        core.ajaxRequest('../controller/api_update.php',callback, 'POST', string);
     }
     var callback = function(data){
         location.reload();

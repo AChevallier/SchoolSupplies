@@ -98,7 +98,7 @@
           </thead>
           <tbody id="body_table">
             <?php
-            $result = $bdd->query("SELECT id,nom, prenom, DATE_FORMAT(dateNaissance, '%d-%m-%Y') as date, estProfesseur, login FROM personne;");
+            $result = $bdd->query("SELECT id,nom, prenom, DATE_FORMAT(dateNaissance, '%d/%m/%Y') as date, estProfesseur, login FROM personne;");
             foreach ($result as $row) {
               if($row['estProfesseur'] == 1){
                 $prof = 'checked="checked"';
@@ -111,10 +111,10 @@
               echo'<td>'.$row['id'].'</td>';
               echo'<td>'.$row['nom'].'</td>';
               echo'<td>'.$row['prenom'].'</td>';
-              echo'<td>'.$row['date'].'</td>';
+              echo'<td class="date">'.$row['date'].'</td>';
               echo'<td><input disabled type="checkbox" '.$prof.'></input></td>';
               echo'<td>'.$row['login'].'</td>';
-              echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
+              echo'<td><img onclick="functions.clickModif(this.parentElement.parentElement.id)" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
               echo'</tr>';
             }
             
