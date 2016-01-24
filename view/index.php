@@ -106,6 +106,9 @@ else{
                             case 'affectation_classe':
                                 include 'affectation_classe.php';
                                 break;
+                            case 'classe_modif';
+                                include 'classe_modif.php';
+                                break;
                             default:
                                 include 'profile.php';
                                 break;
@@ -120,6 +123,8 @@ else{
                 var dict = core.variableGET();
                 if(dict === null)
                     var selected_page = document.getElementById('profile');
+                else if(dict.tab === 'classe_modif')
+                    return;
                 else
                     var selected_page = document.getElementById(dict.tab);
                 selected_page.classList.add('selected_navbar')

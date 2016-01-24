@@ -105,7 +105,7 @@
               echo'<td>'.$row['niveau'].'</td>';
               echo'<td title="'.$eleves.'"><a href="">Élèves</a></td>';
               echo'<td title="'.$profs.'"><a href="">Professeurs</a></td>';
-              echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
+              echo'<td><img onclick="changeLocation('.$row['id'].')" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
               echo'</tr>';
             }
             
@@ -141,5 +141,8 @@
     //this.remove(this.selectedIndex)
   }
   
+ }
+ function changeLocation(id){
+  window.location.href = 'index.php?tab=classe_modif&id='+id;
  }
 </script>
