@@ -3,13 +3,26 @@ var functions = {};
 
 functions.removeList = function(id){
     var which = id.id.split('_');
+    
     if(which[0] === 'eleve')
         listEleves.splice(listEleves.indexOf(which[1]));
     else
         listProfs.splice(listProfs.indexOf(which[1]));
-    
+
     id.remove();
 }
+var callbackC = function(data){
+            var json = JSON.parse(data);
+            console.log(data)
+            if(json.length === 0 || json === 'undefined'){
+                location.reload();
+            }
+            else{
+            for(var key in json){
+                    document.getElementById('erreur_'+key).innerHTML = json[key];
+                }
+            }
+    }
 
 functions.clickDelete = function(id){
 	var select = document.getElementsByClassName('selected_navbar')[0].id;
@@ -32,18 +45,6 @@ functions.clickAdd = function(id){
 	var allInputs = document.getElementById('div_classe_col').getElementsByTagName('input');
 	var allSelects = document.getElementById('div_classe_col').getElementsByTagName('select');
 	var select = document.getElementsByClassName('selected_navbar')[0].id;
-	var callback = function(data){
-            var json = JSON.parse(data);
-            console.log(data)
-            if(json.length === 0 || json === 'undefined'){
-                location.reload();
-            }
-            else{
-            for(var key in json){
-                    document.getElementById('erreur_'+key).innerHTML = json[key];
-                }
-            }
-	}
 	var string = '';
 	if(allInputs.length > 0){
 		for (var i = allInputs.length - 1; i >= 0; i--) {
@@ -70,7 +71,7 @@ functions.clickAdd = function(id){
 		};
 	}
 	string += '&select='+select;
-	core.ajaxRequest('../controller/api_add.php',callback, 'POST', string);
+	core.ajaxRequest('../controller/api_add.php',callbackC, 'POST', string);
 }
 
 functions.clickAddClasses = function(id, listEleves, listProfs){
@@ -78,11 +79,11 @@ functions.clickAddClasses = function(id, listEleves, listProfs){
 	var nomInput =document.getElementById('nom_classe');
 	var niveau = document.getElementById('niveau');
 	var string = nomInput.id+'='+nomInput.value
-	var callbackC = function(data){
-		for(var key in data){
-                    document.getElementById('erreur_'+key).innerHTML = data[key];
-                }
-	}
+    if(listEleves.length === 0 || listProfs.length === 0){
+        document.getElementById('erreur_classe').innerHTML = 'Veuillez ajouter des élèves ou des professeurs';
+        return;
+    }
+	
 	string += '&listEleves='+listEleves.toString();
 	string += '&listProfs='+listProfs.toString();
 	string += '&niveau='+niveau.value;

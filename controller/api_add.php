@@ -78,14 +78,19 @@ switch ($_POST['select']) {
             print json_encode('');
 			break;
 		case 'liste':
-			$req = $bdd->prepare('INSERT INTO liste VALUES(\'\',:prof, :fourniture,:matiere, :quantite)');
-			$req->execute(array(
-				'prof' => $_SESSION["id"],
-				'fourniture' => $_POST['fourn'],
-				'matiere' => $_POST['matiere'],
-				'quantite' => $_POST['quantite']
-				));
-            print json_encode('');
+            $erreurs['quantite'] = check_quantite($_POST["quantite"]);
+            if (count(array_filter($erreurs)) == 0){
+    			$req = $bdd->prepare('INSERT INTO liste VALUES(\'\',:prof, :fourniture,:matiere, :quantite)');
+    			$req->execute(array(
+    				'prof' => $_SESSION["id"],
+    				'fourniture' => $_POST['fourn'],
+    				'matiere' => $_POST['matiere'],
+    				'quantite' => $_POST['quantite']
+    				));
+                print json_encode('');
+                break;
+            }
+            print json_encode($erreurs);
 			break;
 		case 'affectation_classe':
 			$req = $bdd->prepare('INSERT INTO affectation_classe VALUES (:prof, :matiere)');
@@ -108,6 +113,16 @@ function check_string($input = '')
     else if(is_string($input) && !is_numeric($input) && !is_null($input))
         return;
     return 'ce n\'est pas une string';
+}
+function check_quantite($input = ''){
+    if( $input == ''){
+        return 'ne peut pas être nulle';
+    }
+    else if($input == 0)
+        return 'ne peut pas être égale à 0';
+    else if(is_numeric($input))
+        return;
+    return 'ce n\'est pas un numérique';
 }
 
 function check_date($input = ''){

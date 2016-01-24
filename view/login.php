@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // on teste si le visiteur a soumis le formulaire de connexion
 if (isset($_POST['submit']) && $_POST['submit'] == 'Connexion') {
 	if ((isset($_POST['login']) && !empty($_POST['login'])) && (isset($_POST['password']) && !empty($_POST['password']))) {

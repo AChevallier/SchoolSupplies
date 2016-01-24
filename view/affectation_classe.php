@@ -60,8 +60,8 @@
             $result = $bdd->query("SELECT ac.prof_id as pid, ac.matiere_id as mid, p.nom as nom, p.prenom prenom, m.nom as matiere FROM personne p, affectation_classe ac, matiere m WHERE ac.prof_id = p.id AND ac.matiere_id = m.id");
                 foreach ($result as $row) {            
                   echo'<tr id="'.$row['pid'].'_'.$row['mid'].'">';
-                  echo'<td>'.$row['nom'].'</td>';
                   echo'<td>'.$row['prenom'].'</td>';
+                  echo'<td>'.$row['nom'].'</td>';
                   echo'<td>'.$row['matiere'].'</td>';
                   echo'<td><img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
                   echo'</tr>';

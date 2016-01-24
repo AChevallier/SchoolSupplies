@@ -95,10 +95,10 @@
 	var listNomP = <?php echo json_encode($profListNom) ?>;
 
 	for( var key in listNomE) {
-		tableProf.innerHTML += '<tr id="prof_'+key+'"><td>'+listNomE[key]+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
+		tableEleve.innerHTML += '<tr id="prof_'+key+'"><td>'+listNomE[key]+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
 	};
 	for( var key in listNomP) {
-		tableEleve.innerHTML += '<tr id="eleve_'+key+'"><td>'+listNomP[key]+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
+		tableProf.innerHTML += '<tr id="eleve_'+key+'"><td>'+listNomP[key]+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
 	};
  selectEleve.onchange = function(value){
   if(this.selectedOptions[0].innerHTM != '---'){

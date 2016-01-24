@@ -13,6 +13,7 @@
               <div class="input">
                   <label class="label">Nom de la classe:</label>
                   <input type="text" id="nom_classe"></input>
+                  <span id="erreur_nom_classe" class="erreur"></span>
               </div>
           </div>
          <div class="Column">
@@ -30,6 +31,7 @@
           </div>
       </div>
       <div class="Row">
+      <span id="erreur_classe" class="erreur"></span>
           <div class="Column">
               <div class="input">
                   <label class="label">Élèves:</label>
@@ -128,7 +130,7 @@
  var listProfs = [];
  selectEleve.onchange = function(value){
   if(this.selectedOptions[0].innerHTM != '---'){
-    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
+    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
     listEleves.push(this.selectedOptions[0].value);
     this.remove(this.selectedIndex);
   }
@@ -136,7 +138,7 @@
  }
   selectProf.onchange = function(value){
   if(this.selectedOptions[0].innerHTM != '---'){
-    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
+    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
     listProfs.push(this.selectedOptions[0].value);
     //this.remove(this.selectedIndex)
   }
