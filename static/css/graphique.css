@@ -1,7 +1,6 @@
 
 td{
-	width: 40px;
-	height: 55px;
+	width: 60px;
 	border-right: 3px solid #FFFFFF;
 }
 
@@ -10,7 +9,7 @@ table{
 	border: none;
 	border-collapse:collapse;
 }
-tr{
+.graph{
 	height: 55px
 }
 
@@ -23,11 +22,6 @@ tr{
 	width: 550px;
 }
 .libelle{
-	width: 40px;
 	font-size: 75%;
-	-webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    transform: rotate(-90deg);
+	width: 60px;
 }

@@ -77,7 +77,7 @@ else{
                 <!-- include your text here -->
                 <div id="include_html_here">
                    <?php
-                       $tab = filter_input(INPUT_GET, 'tab');;
+                       $tab = filter_input(INPUT_GET, 'tab');
                         switch ($tab) {
                             case 'liste_generale':
                                 include 'liste_generale.php';

@@ -76,7 +76,6 @@
         <table id="pupils_tablet" summary="tableau des classes">
           <thead>
             <tr>
-            <td></td>
               <th scope="col">ID</th>
               <th scope="col">Nom</th>
               <th scope="col">Niveau</th>
@@ -89,17 +88,18 @@
             $result = $bdd->query("SELECT c.id as id, c.nom as nom, n.nom as niveau  FROM classe c, niveau n WHERE c.niveau_id = n.id;");
             foreach ($result as $row) {
               $title_eleve = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_eleve le, personne p WHERE c.id = le.classe_id AND le.eleve_id = p.id AND c.id = ".$row['id'].";");
-              $eleves = '';
+              $eleves = '<ul>';
               foreach ($title_eleve as $eleve) {
-                $eleves .= $eleve['nom'].' '.$eleve['prenom'].'|';
+                $eleves .= '<li>'.$eleve['nom'].' '.$eleve['prenom'].'</li>';
               }
+              $eleves .= '</ul>';
               $title_prof = $bdd->query("SELECT p.nom as nom, p.prenom as prenom FROM classe c, link_prof le, personne p WHERE c.id = le.classe_id AND le.prof_id = p.id AND c.id = ".$row['id'].";");
-              $profs = '';
+              $profs = '<ul>';
               foreach ($title_prof as $prof) {
-                $profs .= $prof['nom'].' '.$prof['prenom'].'|';
+                $profs .= '<li>'.$prof['nom'].' '.$prof['prenom'].'</li>';
               }
+              $profs .= '</ul>';
               echo'<tr id="matiere_'.$row['id'].'">';
-              echo "<td style='width:10px;'><input type='checkbox'></input></td>";
               echo'<td>'.$row['id'].'</td>';
               echo'<td>'.$row['nom'].'</td>';
               echo'<td>'.$row['niveau'].'</td>';
@@ -128,7 +128,7 @@
  var listProfs = [];
  selectEleve.onchange = function(value){
   if(this.selectedOptions[0].innerHTM != '---'){
-    table_eleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
     listEleves.push(this.selectedOptions[0].value);
     this.remove(this.selectedIndex);
   }

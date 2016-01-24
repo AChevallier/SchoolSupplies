@@ -51,7 +51,6 @@
         <table id="pupils_tablet" summary="tableau des matières">
           <thead>
             <tr>
-              <td></td>
               <th scope="col">Quantité</th>
               <th scope="col">Fourniture</th>
               <th scope="col">Matière</th>
@@ -62,7 +61,6 @@
             $result = $bdd->query("SELECT l.id as id, l.quantite as quantite, f.nom as fnom, m.nom as matiere FROM liste l, personne p, fourniture f, matiere m WHERE l.prof_id = p.id AND l.fourniture_id = f.id AND l.matiere_id = m.id AND p.id = ".$_SESSION['id']);
             foreach ($result as $row) {            
               echo'<tr id="liste_'.$row['id'].'">';
-              echo "<td style='width:10px;'><input type='checkbox'></input></td>";
               echo'<td>'.$row['quantite'].'</td>';
               echo'<td>'.$row['fnom'].'</td>';
               echo'<td>'.$row['matiere'].'</td>';

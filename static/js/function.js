@@ -87,7 +87,7 @@ functions.clickModif = function(idBdD){
     var id = idBdD.substring(idBdD.indexOf('_')+1);
     
     for(var i= 0; i <= thisTd.length-1; i++){
-        if(i >= 2 && i < thisTd.length-1)
+        if(i >= 1 && i < thisTd.length-1)
         {
             var typeinput;
             var valueinput;

@@ -87,7 +87,6 @@
         <table id="pupils_tablet" summary="tableau des personne">
           <thead>
             <tr>
-              <td></td>
               <th scope="col">ID</th>
               <th scope="col">Nom</th>
               <th scope="col">Prénom</th>
@@ -107,7 +106,6 @@
                 $prof = '';
               }
               echo'<tr id="matiere_'.$row['id'].'">';
-              echo "<td style='width:10px;'><input type='checkbox'></input></td>";
               echo'<td id="id">'.$row['id'].'</td>';
               echo'<td id="nom">'.$row['nom'].'</td>';
               echo'<td id="prenom">'.$row['prenom'].'</td>';

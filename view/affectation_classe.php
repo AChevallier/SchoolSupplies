@@ -50,7 +50,6 @@
         <table id="pupils_tablet" summary="tableau des matières">
           <thead>
             <tr>
-              <td></td>
               <th scope="col">Prénom professeur</th>
               <th scope="col">Nom professeur</th>
               <th scope="col">Matière</th>
@@ -61,7 +60,6 @@
             $result = $bdd->query("SELECT ac.prof_id as pid, ac.matiere_id as mid, p.nom as nom, p.prenom prenom, m.nom as matiere FROM personne p, affectation_classe ac, matiere m WHERE ac.prof_id = p.id AND ac.matiere_id = m.id");
                 foreach ($result as $row) {            
                   echo'<tr id="'.$row['pid'].'_'.$row['mid'].'">';
-                  echo "<td style='width:10px;'><input type='checkbox'></input></td>";
                   echo'<td>'.$row['nom'].'</td>';
                   echo'<td>'.$row['prenom'].'</td>';
                   echo'<td>'.$row['matiere'].'</td>';

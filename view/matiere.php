@@ -27,7 +27,6 @@
         <table id="pupils_tablet" summary="tableau des matières">
           <thead>
             <tr id="1stRow">
-              <td></td>
               <th scope="col">ID</th>
               <th scope="col">Nom</th>
             </tr>
@@ -37,7 +36,6 @@
             $result = $bdd->query("SELECT id,nom FROM matiere;");
             foreach ($result as $row) {
               echo'<tr id="matiere_'.$row['id'].'">';
-              echo "<td style='width:10px;'><input type='checkbox'></input></td>";
               echo'<td id="id">'.$row['id'].'</td>';
               echo'<td id="nom">'.$row['nom'].'</td>';
               echo'<td><img onclick="functions.clickModif(this.parentElement.parentElement.id)" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
