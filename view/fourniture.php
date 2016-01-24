@@ -51,7 +51,7 @@
               echo'<td>'.$row['id'].'</td>';
               echo'<td>'.$row['nom'].'</td>';
               echo'<td>'.$row['mnom'].'</td>';
-              echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
+              echo'<td><img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
               echo'</tr>';
             }
             

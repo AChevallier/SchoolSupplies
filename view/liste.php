@@ -66,7 +66,7 @@
               echo'<td>'.$row['quantite'].'</td>';
               echo'<td>'.$row['fnom'].'</td>';
               echo'<td>'.$row['matiere'].'</td>';
-              echo'<td><img onclick="" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
+              echo'<td><img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
               echo'</tr>';
             }
           ?>

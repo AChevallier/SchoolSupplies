@@ -93,14 +93,15 @@ functions.clickModif = function(idBdD){
             var valueinput;
             var input = document.createElement("input");
             if( thisTd[i].firstChild.type === 'checkbox'){
-                console.log(thisTd[i].firstChild.value)
                 input.type = 'checkbox';
                 input.checked = thisTd[i].firstChild.checked;
             }
             else if( thisTd[i].className === 'date'){
-                console.log(thisTd[i].firstChild.value)
                 input.type = 'date';
-                input.value = thisTd[i].innerText;
+                var datee = thisTd[i].innerText.split("/");
+                var f = new Date(datee[2], datee[1] - 1, datee[0])
+                console.log(f);
+                input.value = f.toISOString().slice(0,10);
                 input.size = thisTd[i].innerText.length;
             }
             else{
@@ -129,8 +130,14 @@ functions.clickModif = function(idBdD){
         var string = 'select='+select+'&';
         string += 'id='+id+'&';
         for (var i = tr.length - 1; i >= 0; i--) {
-            if(tr[i].childNodes[0].type === 'text'){
-                string += tr[i].id+'='+tr[i].childNodes[0].value;	
+            if(tr[i].childNodes[0].type === 'text'
+            || tr[i].childNodes[0].type === 'date'
+            || tr[i].childNodes[0].type === 'checkbox'){
+
+                if(tr[i].childNodes[0].type === 'checkbox' )
+                    string += tr[i].id+'='+(tr[i].childNodes[0].checked ? 1 : 0);
+                else
+                    string += tr[i].id+'='+tr[i].childNodes[0].value;	
                 if(i !== + 0)
                     string +='&';
             }   

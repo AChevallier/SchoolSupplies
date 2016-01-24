@@ -175,3 +175,42 @@ box-shadow: 0 0 1px rgba(0,0,0, .75);
 .erreur{
     color : red;
 }
+
+.dg-arrange-table-rows-drag-icon{
+    background-color: #FF7292;
+    cursor: move;
+}
+
+[ondragover] {
+    width: 300px;
+    height: 200px;
+}
+[draggable] {
+    width: 200px;
+    height: 35px;
+    margin-bottom: 5px;
+    background-color: #BF5454;
+    cursor: move;
+}
+
+[draggable]:nth-child(even) {
+    background-color: #FFD6D6;
+}
+
+.drag{
+    height: 200px;
+    width: 300px;
+    border: 1px solid black;
+}
+
+.drag li {
+    margin:4px;
+    border: 1px solid #000;
+    border-radius:2px;
+    cursor: move;
+    text-align:center;
+    padding:2px;
+    box-shadow: 1px 1px 12px #555;
+    background-color:white;
+    list-style-type:none;
+}

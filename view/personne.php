@@ -108,12 +108,12 @@
               }
               echo'<tr id="matiere_'.$row['id'].'">';
               echo "<td style='width:10px;'><input type='checkbox'></input></td>";
-              echo'<td>'.$row['id'].'</td>';
-              echo'<td>'.$row['nom'].'</td>';
-              echo'<td>'.$row['prenom'].'</td>';
-              echo'<td class="date">'.$row['date'].'</td>';
-              echo'<td><input disabled type="checkbox" '.$prof.'></input></td>';
-              echo'<td>'.$row['login'].'</td>';
+              echo'<td id="id">'.$row['id'].'</td>';
+              echo'<td id="nom">'.$row['nom'].'</td>';
+              echo'<td id="prenom">'.$row['prenom'].'</td>';
+              echo'<td id="ddn" class="date">'.$row['date'].'</td>';
+              echo'<td id="prof"><input disabled type="checkbox" '.$prof.'></input></td>';
+              echo'<td id="login">'.$row['login'].'</td>';
               echo'<td><img onclick="functions.clickModif(this.parentElement.parentElement.id)" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
               echo'</tr>';
             }
