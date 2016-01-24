@@ -198,7 +198,7 @@ box-shadow: 0 0 1px rgba(0,0,0, .75);
 }
 
 .drag{
-    height: 200px;
+    height: 500px;
     width: 300px;
     border: 1px solid black;
     overflow:auto;
