@@ -128,7 +128,7 @@
  var listProfs = [];
  selectEleve.onchange = function(value){
   if(this.selectedOptions[0].innerHTM != '---'){
-    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
     listEleves.push(this.selectedOptions[0].value);
     this.remove(this.selectedIndex);
   }
@@ -136,7 +136,7 @@
  }
   selectProf.onchange = function(value){
   if(this.selectedOptions[0].innerHTM != '---'){
-    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
     listProfs.push(this.selectedOptions[0].value);
     //this.remove(this.selectedIndex)
   }

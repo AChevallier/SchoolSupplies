@@ -1,6 +1,16 @@
 "use strict";
 var functions = {};
 
+functions.removeList = function(id){
+    var which = id.id.split('_');
+    if(which[0] === 'eleve')
+        listEleves.splice(listEleves.indexOf(which[1]));
+    else
+        listProfs.splice(listProfs.indexOf(which[1]));
+    
+    id.remove();
+}
+
 functions.clickDelete = function(id){
 	var select = document.getElementsByClassName('selected_navbar')[0].id;
 	var callbackD = function(data){

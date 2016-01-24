@@ -5,13 +5,17 @@
     $niveau = $niveauSQL->fetch();
     $eleveSQL = $bdd->query("SELECT le.eleve_id, le.classe_id, p.nom as nom, p.prenom as prenom  FROM link_eleve le, personne p WHERE le.eleve_id = p.id AND classe_id = ".$_GET['id']);
     $eleveList = [];
+    $eleveListNom = [];
     foreach ($eleveSQL as $eleve) {
-    	$eleveList[$eleve['eleve_id']] = $eleve['nom'].' '.$eleve['prenom'];
+    	$eleveList[] = $eleve['eleve_id'];
+    	$eleveListNom[$eleve['eleve_id']] = $eleve['nom'].' '.$eleve['prenom'];
     }
     $profSQL = $bdd->query("SELECT prof_id, classe_id, p.nom as nom, p.prenom as prenom  FROM link_prof lp, personne p WHERE lp.prof_id = p.id AND classe_id = ".$_GET['id']);
     $profList = [];
+    $profListNom = [];
     foreach ($profSQL as $prof) {
-    	$profList[$prof['prof_id']]  = $prof['nom'].' '.$prof['prenom'];
+    	$profList[] = $prof['prof_id'];
+    	$profListNom[$prof['prof_id']]  = $prof['nom'].' '.$prof['prenom'];
     }
 ?>
 <div>
@@ -68,11 +72,10 @@
                         }
                     ?>
                   </select>
-                  <br>
-                  <table id='table_prof'>
-              
-                   </table>
-              </div>
+              </div>              <br>
+              <table id='table_prof'>
+          
+               </table>
           </div>
       </div>
        <div>
@@ -88,15 +91,18 @@
 	var tableProf = document.getElementById('table_prof');
 	var listEleves = <?php echo json_encode($eleveList) ?>;
 	var listProfs = <?php echo json_encode($profList) ?>;
-	for( var key in listProfs) {
-		tableProf.innerHTML += '<tr id="prof_'+key+'"><td>'+listProfs[key]+'<img onclick="removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
+	var listNomE = <?php echo json_encode($eleveListNom) ?>;
+	var listNomP = <?php echo json_encode($profListNom) ?>;
+
+	for( var key in listNomE) {
+		tableProf.innerHTML += '<tr id="prof_'+key+'"><td>'+listNomE[key]+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
 	};
-	for( var key in listEleves) {
-		tableEleve.innerHTML += '<tr id="eleve_'+key+'"><td>'+listEleves[key]+'<img onclick="removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
+	for( var key in listNomP) {
+		tableEleve.innerHTML += '<tr id="eleve_'+key+'"><td>'+listNomP[key]+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
 	};
  selectEleve.onchange = function(value){
   if(this.selectedOptions[0].innerHTM != '---'){
-    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr></td></tr>';
     listEleves.push(this.selectedOptions[0].value);
     this.remove(this.selectedIndex);
   }
@@ -104,13 +110,10 @@
  }
   selectProf.onchange = function(value){
   if(this.selectedOptions[0].innerHTM != '---'){
-    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr></td></tr>';
     listProfs.push(this.selectedOptions[0].value);
     //this.remove(this.selectedIndex)
   }
 }
-function removeList(id){
-	
-	console.log(id);
-}
+
 </script>
