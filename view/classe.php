@@ -103,8 +103,8 @@
               echo'<td>'.$row['id'].'</td>';
               echo'<td>'.$row['nom'].'</td>';
               echo'<td>'.$row['niveau'].'</td>';
-              echo'<td title="'.$eleves.'"><a href="">Élèves</a></td>';
-              echo'<td title="'.$profs.'"><a href="">Professeurs</a></td>';
+              echo'<td class="ht">Élèves<span class="tooltip">'.$eleves.'</span></td>';
+              echo'<td class="ht">Professeurs<span class="tooltip">'.$profs.'</span></td>';
               echo'<td><img onclick="changeLocation('.$row['id'].')" src="../static/img/parameter.png"/> <img onclick="functions.clickDelete(this.parentElement.parentElement.id)" src="../static/img/remove.png"/></td>';
               echo'</tr>';
             }
