@@ -3,7 +3,7 @@ var functions = {};
 
 functions.clickDelete = function(id){
 	var select = document.getElementsByClassName('selected_navbar')[0].id;
-	var callback = function(data){
+	var callbackD = function(data){
 		document.getElementById(id).remove()
 	}
         var ids;
@@ -15,7 +15,7 @@ functions.clickDelete = function(id){
         else{
             ids = 'id='+id.substring(id.indexOf('_')+1);
         }
-	core.ajaxRequest('../controller/api_delete.php',callback, 'POST', 'select='+select+'&'+ids );
+	core.ajaxRequest('../controller/api_delete.php',callbackD, 'POST', 'select='+select+'&'+ids );
 }
 
 functions.clickAdd = function(id){
@@ -25,7 +25,7 @@ functions.clickAdd = function(id){
 	var callback = function(data){
             var json = JSON.parse(data);
             console.log(data)
-            if(json.length === 0){
+            if(json.length === 0 || json === 'undefined'){
                 location.reload();
             }
             else{
@@ -68,7 +68,7 @@ functions.clickAddClasses = function(id, listEleves, listProfs){
 	var nomInput =document.getElementById('nom_classe');
 	var niveau = document.getElementById('niveau');
 	var string = nomInput.id+'='+nomInput.value
-	var callback = function(data){
+	var callbackC = function(data){
 		for(var key in data){
                     document.getElementById('erreur_'+key).innerHTML = data[key];
                 }
@@ -77,7 +77,7 @@ functions.clickAddClasses = function(id, listEleves, listProfs){
 	string += '&listProfs='+listProfs.toString();
 	string += '&niveau='+niveau.value;
 	string += '&select='+select;
-	core.ajaxRequest('../controller/api_add.php',callback, 'POST', string);
+	core.ajaxRequest('../controller/api_add.php',callbackC, 'POST', string);
 	//location.reload();
 }
 
@@ -127,24 +127,24 @@ functions.clickModif = function(idBdD){
     
     function callAjaxValidate(){
         var tr = this.parentElement.parentElement.childNodes;
-        var string = 'select='+select+'&';
-        string += 'id='+id+'&';
+        var req = 'select='+select+'&';
+        req += 'id='+id+'&';
         for (var i = tr.length - 1; i >= 0; i--) {
             if(tr[i].childNodes[0].type === 'text'
             || tr[i].childNodes[0].type === 'date'
             || tr[i].childNodes[0].type === 'checkbox'){
 
                 if(tr[i].childNodes[0].type === 'checkbox' )
-                    string += tr[i].id+'='+(tr[i].childNodes[0].checked ? 1 : 0);
+                    req += tr[i].id+'='+(tr[i].childNodes[0].checked ? 1 : 0);
                 else
-                    string += tr[i].id+'='+tr[i].childNodes[0].value;	
+                    req += tr[i].id+'='+tr[i].childNodes[0].value;	
                 if(i !== + 0)
-                    string +='&';
+                    req +='&';
             }   
         }
-        core.ajaxRequest('../controller/api_update.php',callback, 'POST', string);
+        core.ajaxRequest('../controller/api_update.php',callbackM, 'POST', req);
     }
-    var callback = function(data){
+    var callbackM = function(data){
         location.reload();
     }
     console.log(select+'||'+id);

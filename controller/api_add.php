@@ -5,11 +5,12 @@ $erreurs = [];
 switch ($_POST['select']) {
 		case 'matiere':
                         $erreurs['nom_matiere'] = check_string($_POST["nom_matiere"]);
-                        if (count($erreurs) == 0){
+                        if (count(array_filter($erreurs)) == 0){
                             $req = $bdd->prepare('INSERT INTO matiere VALUES(\'\',:nom)');
                             $req->execute(array(
                                     'nom' => $_POST["nom_matiere"]
                                     ));
+                            print json_encode('');
                             break;
                         }
                         print json_encode($erreurs);
@@ -17,12 +18,14 @@ switch ($_POST['select']) {
 
 		case 'fourniture':
                         $erreurs['nom_fourniture'] = check_string($_POST["nom_fourniture"]);
-                        if(count($erreurs) == 0){
+                        if(count(array_filter($erreurs)) == 0){
                             $req = $bdd->prepare('INSERT INTO fourniture VALUES(\'\',:nom, :matiere, NULL)');
                             $req->execute(array(
                                     'nom' => $_POST["nom_fourniture"],
                                     'matiere' => $_POST['select_matiere']
                                     ));
+
+                            print json_encode('');
                             break;
                         }
 			print json_encode($erreurs);
@@ -36,7 +39,7 @@ switch ($_POST['select']) {
                                 $erreurs[$key] = check_date($value);
                             }
                         }
-                        if(count($erreurs) == 0){
+                        if(count(array_filter($erreurs)) == 0){
                             $req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp, NULL)');
                             $req->execute(array(
 				'nom' => $_POST["nom"],
@@ -46,6 +49,8 @@ switch ($_POST['select']) {
 				'login' => $_POST['login'],
 				'mdp' => $_POST['nom'],
 				)); 
+
+                            print json_encode('');
                             break;
                         }
 			print json_encode($erreurs);
@@ -70,6 +75,7 @@ switch ($_POST['select']) {
 					'prof' => $value
 					));
 			}
+            print json_encode('');
 			break;
 		case 'liste':
 			$req = $bdd->prepare('INSERT INTO liste VALUES(\'\',:prof, :fourniture,:matiere, :quantite)');
@@ -79,6 +85,7 @@ switch ($_POST['select']) {
 				'matiere' => $_POST['matiere'],
 				'quantite' => $_POST['quantite']
 				));
+            print json_encode('');
 			break;
 		case 'affectation_classe':
 			$req = $bdd->prepare('INSERT INTO affectation_classe VALUES (:prof, :matiere)');
@@ -86,6 +93,7 @@ switch ($_POST['select']) {
 				'prof' => $_POST['prof'],
 				'matiere' => $_POST['matiere']
 				));
+            print json_encode('');
 			break;
 		default:
 		print 'default';
@@ -122,5 +130,4 @@ function check_date($input = ''){
     }
     return 'date non reconnu';
 }
-
 ?>
