@@ -22,4 +22,33 @@ switch ($_POST['select']) {
                     ));
             print 'OK';
             break;
+        case 'classe_modif':
+            $eleves = explode(",", $_POST["listEleves"]);
+            $profs = explode(",", $_POST["listProfs"]);
+            $req = $bdd->prepare('UPDATE classe SET nom = :nom, niveau_id = :niveau WHERE id = :id;');
+            $req->execute(array(
+                    'nom' => $_POST["nom_classe"],
+                    'niveau' => $_POST["niveau"],
+                    'id' => $_POST["id"]
+                    ));
+            $query = "DELETE FROM link_eleve WHERE classe_id = ".$_POST['id'].";";
+            $count = $bdd->exec($query);
+            $query = "DELETE FROM link_prof WHERE classe_id = ".$_POST['id'].";";
+            $count = $bdd->exec($query);
+            foreach ($eleves as $value) {
+                $req = $bdd->prepare('INSERT INTO link_eleve VALUES(:eleve, :id)');
+                $req->execute(array(
+                    'eleve' => $value,
+                    'id' => $_POST['id']
+                    ));
+            }
+            foreach ($profs as $value) {
+                $req = $bdd->prepare('INSERT INTO link_prof VALUES(:prof, :id)');
+                $req->execute(array(
+                    'prof' => $value,
+                    'id' => $_POST['id']
+                    ));
+            }
+            print 'OK';
+            break;
         }

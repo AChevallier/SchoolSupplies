@@ -30,8 +30,9 @@
             </div>
           </div>
       </div>
-      <div class="Row">
+      
       <span id="erreur_classe" class="erreur"></span>
+      <div class="Row">
           <div class="Column">
               <div class="input">
                   <label class="label">Élèves:</label>
@@ -40,7 +41,7 @@
                     <?php
                         $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 0 AND p.id NOT IN (SELECT eleve_id FROM link_eleve)");
                         foreach ($result as $row) {
-                          echo '<option value="'.$row['id'].'">'.$row['prenom'].'-'.$row['nom'].'</option>';
+                          echo '<option value="'.$row['id'].'">'.$row['nom'].' '.$row['prenom'].'</option>';
                         }
                     ?>
                   </select>
@@ -53,11 +54,11 @@
               <div class="input">
                   <label class="label">Professeurs:</label>
                   <select id='select_prof'>
-                   <option id='-2'>----</option>
+                   <option id='-1'>----</option>
                     <?php
                         $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 1;");
                         foreach ($result as $row) {
-                          echo '<option value="'.$row['id'].'">'.$row['prenom'].'-'.$row['nom'].'</option>';
+                          echo '<option value="'.$row['id'].'">'.$row['nom'].' '.$row['prenom'].'</option>';
                         }
                     ?>
                   </select>
@@ -147,4 +148,17 @@
  function changeLocation(id){
   window.location.href = 'index.php?tab=classe_modif&id='+id;
  }
+
+
+function removeList(id){
+    var which = id.id.split('_');
+    
+    if(which[0] === 'eleve')
+        listEleves.splice(listEleves.indexOf(which[1]));
+        
+    else
+        listProfs.splice(listProfs.indexOf(which[1]));
+
+    id.remove();
+}
 </script>

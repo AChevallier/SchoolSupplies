@@ -41,6 +41,8 @@
             </div>
           </div>
       </div>
+
+      <span id="erreur_classe" class="erreur"></span>
       <div class="Row">
           <div class="Column">
               <div class="input">
@@ -50,7 +52,7 @@
                     <?php
                         $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 0 AND p.id NOT IN (SELECT eleve_id FROM link_eleve)");
                         foreach ($result as $row) {
-                          echo '<option id="select_eleve_'.$row['id'].'" value="'.$row['id'].'">'.$row['prenom'].'-'.$row['nom'].'</option>';
+                          echo '<option class="select_eleve" id="select_eleve_'.$row['id'].'" value="'.$row['id'].'">'.$row['nom'].' '.$row['prenom'].'</option>';
                         }
                     ?>
                   </select>
@@ -64,11 +66,11 @@
               <div class="input">
                   <label class="label">Professeurs:</label>
                   <select id='select_prof'>
-                   <option id='-2'>----</option>
+                   <option id='-1'>----</option>
                     <?php
                         $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 1;");
                         foreach ($result as $row) {
-                          echo '<option id="select_prof_'.$row['id'].'" value="'.$row['id'].'">'.$row['prenom'].'-'.$row['nom'].'</option>';
+                          echo '<option class="select_prof" id="select_prof_'.$row['id'].'" value="'.$row['id'].'">'.$row['nom'].' '.$row['prenom'].'</option>';
                         }
                     ?>
                   </select>
@@ -80,10 +82,11 @@
       </div>
        <div>
           <div class="input_login">
-              <input class="submit" onclick="" id="submit" type="submit" value="Ajouter"></input>
+              <input class="submit" onclick="functions.clickModifClasses(<?php echo $_GET['id'] ?>, listEleves, listProfs)" id="submit" type="submit" value="Ajouter"></input>
           </div>
       </div>
 </div>
+<div id="success">Modification effectué</div>
 <script type="text/javascript">
 	var selectEleve = document.getElementById('select_eleve');
 	var tableEleve = document.getElementById('table_eleve');
@@ -93,27 +96,55 @@
 	var listProfs = <?php echo json_encode($profList) ?>;
 	var listNomE = <?php echo json_encode($eleveListNom) ?>;
 	var listNomP = <?php echo json_encode($profListNom) ?>;
-
 	for( var key in listNomE) {
-		tableEleve.innerHTML += '<tr id="prof_'+key+'"><td>'+listNomE[key]+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
+		tableEleve.innerHTML += '<tr id="eleve_'+key+'"><td>'+listNomE[key]+'<img onclick="removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
 	};
 	for( var key in listNomP) {
-		tableProf.innerHTML += '<tr id="eleve_'+key+'"><td>'+listNomP[key]+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
+		tableProf.innerHTML += '<tr id="prof_'+key+'"><td>'+listNomP[key]+'<img onclick="removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr>';
 	};
+  for (var i = selectEleve.length - 1; i >= 0; i--) {
+    if(selectEleve[i].id == -1)
+      continue;
+    listNomE[selectEleve[i].id.split('_')[2]] = selectEleve[i].innerHTML;
+  };
+  for (var i = selectProf.length - 1; i >= 0; i--) {
+    if(selectProf[i].id == -1)
+      continue;
+    listNomP[selectProf[i].id.split('_')[2]] = selectProf[i].innerHTML;
+  };
  selectEleve.onchange = function(value){
-  if(this.selectedOptions[0].innerHTM != '---'){
-    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr></td></tr>';
+  if(this.selectedOptions[0].id != -1){
+    tableEleve.innerHTML += '<tr id="eleve_'+this.selectedOptions[0].id.split('_')[2]+'"><td>'+this.selectedOptions[0].innerHTML+'<img onclick="removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr></td></tr>';
     listEleves.push(this.selectedOptions[0].value);
     this.remove(this.selectedIndex);
   }
   
  }
   selectProf.onchange = function(value){
-  if(this.selectedOptions[0].innerHTM != '---'){
-    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'<img onclick="functions.removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr></td></tr>';
+  if(this.selectedOptions[0].id != -1){
+    tableProf.innerHTML += '<tr id="prof_'+this.selectedOptions[0].id.split('_')[2]+'"><td>'+this.selectedOptions[0].innerHTML+'<img onclick="removeList(this.parentElement.parentElement)" src="../static/img/remove.png"/></td></tr></td></tr>';
     listProfs.push(this.selectedOptions[0].value);
     //this.remove(this.selectedIndex)
   }
+  this.selectedIndex = -1;
 }
+function removeList(id){
+    var which = id.id.split('_');
+ console.log(id)
+  console.log(listNomE)
+    var opt = document.createElement('option');
+    opt.id = 'select_'+which[0]+'_'+which[1];
+    opt.value = which[1];
+    if(which[0] === 'eleve'){
+        listEleves.splice(listEleves.indexOf(which[1]));
+        opt.innerText = listNomE[which[1]];
+        console.log(opt);
+        selectEleve.appendChild(opt);
+    }
+    else{
+        listProfs.splice(listProfs.indexOf(which[1]));
+    }
 
+    id.remove();
+}
 </script>

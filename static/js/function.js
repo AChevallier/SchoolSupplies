@@ -1,16 +1,6 @@
 "use strict";
 var functions = {};
 
-functions.removeList = function(id){
-    var which = id.id.split('_');
-    
-    if(which[0] === 'eleve')
-        listEleves.splice(listEleves.indexOf(which[1]));
-    else
-        listProfs.splice(listProfs.indexOf(which[1]));
-
-    id.remove();
-}
 var callbackC = function(data){
             var json = JSON.parse(data);
             console.log(data)
@@ -91,7 +81,26 @@ functions.clickAddClasses = function(id, listEleves, listProfs){
 	core.ajaxRequest('../controller/api_add.php',callbackC, 'POST', string);
 	//location.reload();
 }
+functions.clickModifClasses = function(id, listEleves, listProfs){
+    var nomInput =document.getElementById('nom_classe');
+    var niveau = document.getElementById('niveau');
+    var string = nomInput.id+'='+nomInput.value
+    if(listEleves.length === 0 || listProfs.length === 0){
+        document.getElementById('erreur_classe').innerHTML = 'Veuillez ajouter des élèves ou des professeurs';
+        return;
+    }
+    
+    var callbackModifC = function(data){
+        window.location.href = 'index.php?tab=classe';
+    }
+    string += '&listEleves='+listEleves.toString();
+    string += '&listProfs='+listProfs.toString();
+    string += '&niveau='+niveau.value;
+    string += '&select=classe_modif';
+    string += '&id='+id
+    core.ajaxRequest('../controller/api_update.php',callbackModifC, 'POST', string);
 
+}
 functions.clickModif = function(idBdD){
     var select = document.getElementsByClassName('selected_navbar')[0].id;
     var thisTd = document.getElementById(idBdD).childNodes;
