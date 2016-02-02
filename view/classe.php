@@ -36,7 +36,7 @@
           <div class="Column">
               <div class="input">
                   <label class="label">Élèves:</label>
-                  <select id='select_eleve'>
+                  <select multiple id='select_eleve'>
                     <option id="-1">----</option>
                     <?php
                         $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 0 AND p.id NOT IN (SELECT eleve_id FROM link_eleve)");
@@ -45,15 +45,17 @@
                         }
                     ?>
                   </select>
+                  <button id="button_eleve">Ajouter</button>
+                <table id='table_eleve'>
+                
+                </table>
+
               </div>
-              <table id='table_eleve'>
-              
-              </table>
           </div>
           <div class="Column">
               <div class="input">
                   <label class="label">Professeurs:</label>
-                  <select id='select_prof'>
+                  <select multiple id='select_prof'>
                    <option id='-1'>----</option>
                     <?php
                         $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 1;");
@@ -62,6 +64,7 @@
                         }
                     ?>
                   </select>
+                  <button id="button_prof">Ajouter</button>
                   <table id='table_prof'>
               
                    </table>
@@ -129,22 +132,46 @@
  var tableProf = document.getElementById('table_prof');
  var listEleves = [];
  var listProfs = [];
- selectEleve.onchange = function(value){
-  if(this.selectedOptions[0].innerHTM != '---'){
-    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
-    listEleves.push(this.selectedOptions[0].value);
-    this.remove(this.selectedIndex);
-  }
+ // selectEleve.onchange = function(value){
+ //  if(this.selectedOptions[0].innerHTM != '---'){
+ //    tableEleve.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+ //    listEleves.push(this.selectedOptions[0].value);
+ //    this.remove(this.selectedIndex);
+ //  }
   
- }
-  selectProf.onchange = function(value){
-  if(this.selectedOptions[0].innerHTM != '---'){
-    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
-    listProfs.push(this.selectedOptions[0].value);
-    //this.remove(this.selectedIndex)
-  }
+ // }
+ //  selectProf.onchange = function(value){
+ //  if(this.selectedOptions[0].innerHTM != '---'){
+ //    tableProf.innerHTML += '<tr><td>'+this.selectedOptions[0].innerHTML+'</td></tr>';
+ //    listProfs.push(this.selectedOptions[0].value);
+ //    //this.remove(this.selectedIndex)
+ //  }
   
- }
+ // }
+ var buttonEleve = document.getElementById('button_eleve');
+ var buttonProf = document.getElementById('button_prof');
+
+buttonEleve.onclick = function(data){
+  var selectData = selectEleve.selectedOptions;
+  for (var i = 0; i < selectData.length; i++) {
+    if(selectData[i].id != -1){
+    tableEleve.innerHTML += '<tr><td>'+selectData[i].innerHTML+'</td></tr>';
+    listEleves.push(selectData[i].value);
+    selectData[i].parentNode.removeChild(selectData[i]);
+    }
+  };
+  
+}
+buttonProf.onclick = function(data){
+  var selectData = selectProf.selectedOptions;
+  for (var i = 0; i < selectData.length; i++) {
+    if(selectData[i].id != -1){
+    tableProf.innerHTML += '<tr><td>'+selectData[i].innerHTML+'</td></tr>';
+    listProfs.push(selectData[i].value);
+    }
+  };
+}
+
  function changeLocation(id){
   window.location.href = 'index.php?tab=classe_modif&id='+id;
  }

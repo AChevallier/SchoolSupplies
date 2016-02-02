@@ -28,6 +28,10 @@ select{
     outline:none;
     height: 34px;
 }
+select[multiple]{
+    height: 100px;
+    width: 100px;
+}
 
 .submit{
     cursor:pointer;

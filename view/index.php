@@ -21,6 +21,7 @@ else{
 	<body>
 		<div id="top_bar">
 			<div id="deconnexion">
+                <span><?php echo $_SESSION['login'] ?> |</span>
                 <a href="../controller/api_disconnect.php">Se déconnecter <img src="../static/img/logout.png"/></a>
             </div>
             <img src="../static/img/logo_moche.png" class="logo"/>
@@ -108,6 +109,9 @@ else{
                                 break;
                             case 'classe_modif';
                                 include 'classe_modif.php';
+                                break;
+                            case 'profile';
+                                include 'profile.php';
                                 break;
                             default:
                                 include 'profile.php';

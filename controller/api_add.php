@@ -31,17 +31,17 @@ switch ($_POST['select']) {
 			print json_encode($erreurs);
                         break;
 		case 'personne':
-                        foreach ($_POST as $key => $value) {
-                            if(in_array($key, ['nom', 'prenom', 'login'])){
-                                $erreurs[$key] = check_string($value);
-                            }
-                            else if( $key == 'ddn'){
-                                $erreurs[$key] = check_date($value);
-                            }
-                        }
-                        if(count(array_filter($erreurs)) == 0){
-                            $req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp, NULL)');
-                            $req->execute(array(
+            foreach ($_POST as $key => $value) {
+                if(in_array($key, ['nom', 'prenom', 'login'])){
+                    $erreurs[$key] = check_string($value);
+                }
+                else if( $key == 'ddn'){
+                    $erreurs[$key] = check_date($value);
+                }
+            }
+            if(count(array_filter($erreurs)) == 0){
+                $req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp, NULL)');
+                $req->execute(array(
 				'nom' => $_POST["nom"],
 				'prenom' => $_POST['prenom'],
 				'ddn' => $_POST['ddn'],
@@ -50,32 +50,36 @@ switch ($_POST['select']) {
 				'mdp' => $_POST['nom'],
 				)); 
 
-                            print json_encode('');
-                            break;
-                        }
+                print json_encode('');
+                break;
+            }
 			print json_encode($erreurs);
 			break;
 		case 'classe':
 			$eleves = explode(",", $_POST["listEleves"]);
 			$profs = explode(",", $_POST["listProfs"]);
-			$req = $bdd->prepare('INSERT INTO classe VALUES(\'\',:nom, (SELECT id FROM niveau WHERE id = :niveau))');
-			$req->execute(array(
-				'nom' => $_POST["nom_classe"],
-				'niveau' => $_POST['niveau']
-				));
-			foreach ($eleves as $value) {
-				$req = $bdd->prepare('INSERT INTO link_eleve VALUES(:eleve, (SELECT max(id) FROM classe))');
-				$req->execute(array(
-					'eleve' => $value
-					));
-			}
-			foreach ($profs as $value) {
-				$req = $bdd->prepare('INSERT INTO link_prof VALUES(:prof, (SELECT max(id) FROM classe))');
-				$req->execute(array(
-					'prof' => $value
-					));
-			}
-            print json_encode('');
+            $erreurs['nom_classe'] = check_string($_POST["nom_classe"]);
+            if(count(array_filter($erreurs)) == 0){
+    			$req = $bdd->prepare('INSERT INTO classe VALUES(\'\',:nom, (SELECT id FROM niveau WHERE id = :niveau))');
+    			$req->execute(array(
+    				'nom' => $_POST["nom_classe"],
+    				'niveau' => $_POST['niveau']
+    				));
+    			foreach ($eleves as $value) {
+    				$req = $bdd->prepare('INSERT INTO link_eleve VALUES(:eleve, (SELECT max(id) FROM classe))');
+    				$req->execute(array(
+    					'eleve' => $value
+    					));
+    			}
+    			foreach ($profs as $value) {
+    				$req = $bdd->prepare('INSERT INTO link_prof VALUES(:prof, (SELECT max(id) FROM classe))');
+    				$req->execute(array(
+    					'prof' => $value
+    					));
+    			}
+                print json_encode('');
+            }
+            print json_encode($erreurs);
 			break;
 		case 'liste':
             $erreurs['quantite'] = check_quantite($_POST["quantite"]);
