@@ -50,7 +50,7 @@
                   <select multiple id='select_eleve'>
                     <option id="-1">----</option>
                     <?php
-                        $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 0 AND p.id NOT IN (SELECT eleve_id FROM link_eleve)");
+                        $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 0 AND isAdmin = 0 OR isAdmin is null AND p.id NOT  IN (SELECT eleve_id FROM link_eleve)");
                         foreach ($result as $row) {
                           echo '<option class="select_eleve" id="select_eleve_'.$row['id'].'" value="'.$row['id'].'">'.$row['nom'].' '.$row['prenom'].'</option>';
                         }
@@ -69,7 +69,7 @@
                   <select multiple id='select_prof'>
                    <option id='-1'>----</option>
                     <?php
-                        $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 1;");
+                        $result = $bdd->query("SELECT id, nom, prenom FROM personne p WHERE estProfesseur = 1 AND isAdmin = 0 OR isAdmin is null;");
                         foreach ($result as $row) {
                           echo '<option class="select_prof" id="select_prof_'.$row['id'].'" value="'.$row['id'].'">'.$row['nom'].' '.$row['prenom'].'</option>';
                         }

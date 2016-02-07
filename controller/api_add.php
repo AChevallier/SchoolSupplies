@@ -40,7 +40,7 @@ switch ($_POST['select']) {
                 }
             }
             if(count(array_filter($erreurs)) == 0){
-                $req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp, NULL)');
+                $req = $bdd->prepare('INSERT INTO personne VALUES(\'\',:nom, :prenom, :ddn, :estP, :login, :mdp, 0)');
                 $req->execute(array(
 				'nom' => $_POST["nom"],
 				'prenom' => $_POST['prenom'],

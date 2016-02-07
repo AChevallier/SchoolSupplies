@@ -14,7 +14,7 @@
                   <select id="prof">
                     <option value="-1">---</option>
                     <?php
-                      $result = $bdd->query("SELECT id, nom, prenom FROM personne WHERE estProfesseur = 1");
+                      $result = $bdd->query("SELECT id, nom, prenom FROM personne WHERE estProfesseur = 1 AND isAdmin = 0");
                       foreach ($result as $row) {            
                         echo'<option value='.$row['id'].'>'.$row['prenom'].' '.$row['nom'].'</option>';
                       }
