@@ -7,13 +7,13 @@
         function BasicTable($data)
         {
             foreach(['Nom', 'Quantité', 'Matière'] as $col)
-                $this->Cell(40,7,$col,1);
+                $this->Cell(55,7,utf8_decode($col),1);
             $this->Ln();
             foreach($data as $row)
             {
-                $this->Cell(40,6,$row[0],1);
-                $this->Cell(40,6,$row[1],1);
-                $this->Cell(40,6,$row[2],1);
+                $this->Cell(55,6,utf8_decode($row[0]),1);
+                $this->Cell(55,6,utf8_decode($row[1]),1);
+                $this->Cell(55,6,utf8_decode($row[2]),1);
                 $this->Ln();
             }
         }
